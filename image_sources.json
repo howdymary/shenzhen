@@ -1,0 +1,65 @@
+{
+  "dji_mavic_3_pro": {
+    "url": "https://upload.wikimedia.org/wikipedia/commons/e/ed/2024-10-_DJI_Mavic_3_Pro_-_01.jpg",
+    "source": "Wikimedia Commons",
+    "credit": "A.BourgeoisP",
+    "license": "CC BY 4.0",
+    "license_url": "https://creativecommons.org/licenses/by/4.0",
+    "description": "DJI Mavic 3 Pro drone product photo",
+    "commons_page": "https://commons.wikimedia.org/wiki/File:2024-10-_DJI_Mavic_3_Pro_-_01.jpg"
+  },
+  "byd_seal_ev": {
+    "url": "https://upload.wikimedia.org/wikipedia/commons/d/d6/2023_BYD_Seal_Design.jpg",
+    "source": "Wikimedia Commons",
+    "credit": "Calreyn88",
+    "license": "CC BY 4.0",
+    "license_url": "https://creativecommons.org/licenses/by/4.0",
+    "description": "2023 BYD Seal Design electric vehicle",
+    "commons_page": "https://commons.wikimedia.org/wiki/File:2023_BYD_Seal_Design.jpg"
+  },
+  "dreame_l20_ultra": {
+    "url": "https://upload.wikimedia.org/wikipedia/commons/d/d4/Robot_Vacuum_2016_%2831606445890%29.jpg",
+    "source": "Wikimedia Commons",
+    "credit": "Ryan McBride",
+    "license": "CC BY 2.0",
+    "license_url": "https://creativecommons.org/licenses/by/2.0",
+    "description": "Robot vacuum cleaner (generic, representing Dreame L20 Ultra)",
+    "commons_page": "https://commons.wikimedia.org/wiki/File:Robot_Vacuum_2016_(31606445890).jpg"
+  },
+  "elephant_robotics_mycobot": {
+    "url": "https://upload.wikimedia.org/wikipedia/commons/e/e3/Dobot-_A_Robot_arm.png",
+    "source": "Wikimedia Commons",
+    "credit": "DangerAlpha",
+    "license": "CC0 1.0",
+    "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "description": "Dobot robot arm (representative image for Elephant Robotics myCobot)",
+    "commons_page": "https://commons.wikimedia.org/wiki/File:Dobot-_A_Robot_arm.png"
+  },
+  "hoverair_x1_drone": {
+    "url": "https://upload.wikimedia.org/wikipedia/commons/0/09/A_drone_DJI_Mavic_2_Pro_flying.jpg",
+    "source": "Wikimedia Commons",
+    "credit": "Iswoar",
+    "license": "CC BY-SA 4.0",
+    "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+    "description": "DJI Mavic 2 Pro in flight (generic drone image representing HOVERAir X1)",
+    "commons_page": "https://commons.wikimedia.org/wiki/File:A_drone_DJI_Mavic_2_Pro_flying.jpg"
+  },
+  "shenzhen_skyline": {
+    "url": "https://upload.wikimedia.org/wikipedia/commons/2/27/201610_North_District_and_Shenzhen.jpg",
+    "source": "Wikimedia Commons",
+    "credit": "MNXANL",
+    "license": "CC BY-SA 4.0",
+    "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+    "description": "Aerial view of North District and Shenzhen skyline",
+    "commons_page": "https://commons.wikimedia.org/wiki/File:201610_North_District_and_Shenzhen.jpg"
+  },
+  "huaqiangbei_market": {
+    "url": "https://upload.wikimedia.org/wikipedia/commons/5/5f/Entrance_of_Huaqiangbei%2C_2017.jpg",
+    "source": "Wikimedia Commons",
+    "credit": "\u5343\u91cc\u8d70\u5355\u9a91",
+    "license": "CC BY-SA 3.0",
+    "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+    "description": "Entrance of Huaqiangbei pedestrian street, Shenzhen",
+    "commons_page": "https://commons.wikimedia.org/wiki/File:Entrance_of_Huaqiangbei,_2017.jpg"
+  }
+}

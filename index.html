@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shenzhen Robotics & Manufacturing Trek — April 27–30, 2026</title>
+  <meta name="description" content="4-day immersion into Shenzhen's robotics and manufacturing ecosystem. Visit DJI, BYD, Elephant Robotics, and more.">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; color: #111; background: #fff; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    a { color: #1d4ed8; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    img { display: block; max-width: 100%; }
+
+    .wrap { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+    .section { padding: 56px 0; }
+    .divider { border-top: 1px solid #e5e7eb; }
+
+    /* Hero */
+    .hero { background: #0f1923; color: #fff; padding: 64px 0 0; }
+    .hero-inner { text-align: center; padding-bottom: 0; }
+    .hero h1 { font-size: 36px; font-weight: 700; letter-spacing: -0.025em; line-height: 1.15; margin-bottom: 8px; }
+    .hero .dates { font-size: 20px; font-weight: 600; margin-bottom: 8px; }
+    .hero .sub { font-size: 15px; color: #b0bec5; margin-bottom: 6px; }
+    .hero .tags { font-size: 13px; color: #6b7f8e; margin-bottom: 32px; }
+    .hero-img { padding: 0 24px 32px; }
+    .hero-img img { width: 100%; height: 224px; object-fit: cover; border-radius: 8px; }
+
+    /* Facts grid */
+    .facts { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; max-width: 700px; border-radius: 8px; overflow: hidden; background: #e5e7eb; }
+    .facts > div { background: #fff; padding: 16px; }
+    .facts .label { font-size: 10px; letter-spacing: 0.1em; color: #94a3b8; text-transform: uppercase; font-weight: 600; margin-bottom: 8px; }
+    .facts .value { font-size: 14px; font-weight: 600; color: #111; }
+
+    /* Day */
+    .day { margin-bottom: 56px; }
+    .day:last-child { margin-bottom: 0; }
+    .day-header { display: flex; align-items: center; gap: 12px; padding-bottom: 16px; border-bottom: 2px solid #0f1923; margin-bottom: 24px; }
+    .day-num { display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 4px; font-weight: 700; color: #fff; background: #0f1923; font-size: 13px; flex-shrink: 0; }
+    .day-title { font-size: 17px; font-weight: 600; }
+    .day-date { font-size: 13px; color: #64748b; margin-top: 2px; }
+
+    /* Images */
+    .day-images { display: grid; gap: 12px; margin-bottom: 24px; }
+    .day-images.two { grid-template-columns: 1fr 1fr; }
+    .day-images.one { grid-template-columns: 1fr; }
+    .photo { width: 100%; height: 160px; border-radius: 8px; overflow: hidden; background: linear-gradient(135deg, #1e293b, #334155); position: relative; }
+    .photo img { width: 100%; height: 100%; object-fit: cover; }
+    .photo-fallback { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 13px; color: #94a3b8; font-weight: 500; }
+
+    /* Two-column */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; }
+    .col-left { padding-right: 24px; border-right: 1px solid #e5e7eb; }
+    .col-right { padding-left: 24px; }
+    .col-label { font-size: 10px; letter-spacing: 0.12em; color: #94a3b8; text-transform: uppercase; font-weight: 600; margin-bottom: 16px; }
+
+    /* Schedule */
+    .sched-item { display: flex; gap: 12px; padding: 8px 0; border-top: 1px solid #f3f4f6; }
+    .sched-item:first-child { border-top: none; }
+    .sched-time { font-size: 11px; color: #94a3b8; font-family: 'SF Mono', 'Menlo', monospace; width: 95px; flex-shrink: 0; }
+    .sched-act { font-size: 13px; color: #374151; line-height: 1.5; }
+
+    /* Companies */
+    .company { margin-bottom: 16px; }
+    .company:last-child { margin-bottom: 0; }
+    .company a, .company .name-plain { font-size: 14px; font-weight: 600; }
+    .company .name-plain { color: #374151; }
+    .company .arrow { font-size: 11px; margin-left: 4px; opacity: 0.5; }
+    .company p { font-size: 12px; color: #6b7280; line-height: 1.55; margin-top: 2px; }
+
+    /* Map */
+    #map { width: 100%; height: 400px; border-radius: 8px; }
+    .pin-legend { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 24px; margin-top: 20px; }
+    .pin-item { display: flex; align-items: center; gap: 8px; padding: 6px 0; border-bottom: 1px solid #f3f4f6; }
+    .pin-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .pin-name { font-size: 13px; color: #374151; }
+    .pin-dist { font-size: 11px; color: #94a3b8; margin-left: auto; }
+
+    /* Logistics */
+    .logistics-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; max-width: 680px; margin-bottom: 32px; }
+    .logistics-card { border-radius: 8px; padding: 20px; background: #f8f9fb; border: 1px solid #e5e7eb; }
+    .logistics-card h4 { font-size: 13px; font-weight: 600; margin-bottom: 8px; color: #0f1923; }
+    .logistics-card p { font-size: 13px; color: #6b7280; line-height: 1.65; }
+
+    .breakdown { border-radius: 8px; padding: 24px; background: #f0f4f8; border: 1px solid #cbd5e1; margin-bottom: 32px; }
+    .breakdown h4 { font-size: 14px; font-weight: 600; margin-bottom: 16px; color: #0f1923; }
+    .breakdown > p { font-size: 13px; color: #475569; line-height: 1.7; margin-bottom: 16px; }
+    .bk-line { display: flex; justify-content: space-between; align-items: flex-start; padding: 8px 0; border-bottom: 1px solid #e2e8f0; }
+    .bk-line:last-child { border-bottom: none; }
+    .bk-label { font-size: 13px; color: #0f1923; font-weight: 500; }
+    .bk-desc { font-size: 12px; color: #64748b; margin-top: 2px; }
+    .bk-cost { font-size: 13px; color: #0f1923; font-weight: 600; margin-left: 12px; white-space: nowrap; }
+
+    /* Footer */
+    footer { border-top: 1px solid #e5e7eb; background: #f8f9fb; padding: 32px 24px; text-align: center; }
+    footer p { font-size: 13px; color: #94a3b8; }
+    footer .small { font-size: 11px; color: #c0c8d0; margin-top: 8px; }
+
+    /* Leaflet tooltip override */
+    .ll { background: rgba(255,255,255,.92) !important; border: none !important; box-shadow: 0 2px 8px rgba(0,0,0,.1) !important; border-radius: 4px !important; padding: 2px 6px !important; font-size: 11px !important; font-weight: 600 !important; color: #1a1a2e !important; white-space: nowrap !important; font-family: -apple-system, system-ui, sans-serif !important; }
+
+    @media (max-width: 700px) {
+      .facts { grid-template-columns: repeat(2, 1fr); }
+      .two-col { grid-template-columns: 1fr; }
+      .col-left { padding-right: 0; border-right: none; padding-bottom: 24px; border-bottom: 1px solid #e5e7eb; margin-bottom: 24px; }
+      .col-right { padding-left: 0; }
+      .day-images.two { grid-template-columns: 1fr; }
+      .logistics-grid { grid-template-columns: 1fr; }
+      .pin-legend { grid-template-columns: 1fr; }
+      .hero h1 { font-size: 28px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="wrap hero-inner">
+      <h1>Shenzhen Robotics &amp;<br>Manufacturing Trek</h1>
+      <p class="dates">April 27 – 30, 2026</p>
+      <p class="sub">4 Days · Shenzhen &amp; Dongguan, China</p>
+      <p class="tags">DJI · BYD · Dreame · Elephant Robotics · Zero Zero Robotics · HAX · Chaihuo · Huaqiangbei</p>
+    </div>
+    <div class="wrap hero-img">
+      <img src="https://images.unsplash.com/photo-1518206775418-56249e35f918?w=1200&q=80" alt="Shenzhen skyline" onerror="this.style.display='none'">
+    </div>
+  </header>
+
+  <!-- OVERVIEW -->
+  <div class="wrap section">
+    <h2 style="font-size:22px;font-weight:600;margin-bottom:20px">Trip Overview</h2>
+    <p style="color:#475569;line-height:1.7;margin-bottom:32px;max-width:620px;font-size:15px">
+      A focused, 4-day immersion into Shenzhen's robotics and manufacturing ecosystem.
+      Visit the headquarters of companies building drones, EVs, and collaborative robots.
+      Tour factories, makerspaces, and the electronics markets that power global hardware innovation.
+    </p>
+    <div class="facts">
+      <div><p class="label">Dates</p><p class="value">April 27 – 30</p></div>
+      <div><p class="label">Participants</p><p class="value">Capped at 20</p></div>
+      <div><p class="label">Deposit</p><p class="value">$200 USD</p></div>
+      <div><p class="label">Duration</p><p class="value">4 days</p></div>
+    </div>
+  </div>
+
+  <div class="wrap"><div class="divider"></div></div>
+
+  <!-- ITINERARY -->
+  <div class="wrap section">
+    <h2 style="font-size:22px;font-weight:600;margin-bottom:8px">Itinerary</h2>
+    <p style="font-size:13px;color:#94a3b8;margin-bottom:40px">Day-by-day schedule with company and location details</p>
+
+    <!-- DAY 1 -->
+    <div class="day">
+      <div class="day-header">
+        <span class="day-num">1</span>
+        <div><div class="day-title">Day 1: Hardware Ecosystem + Large-Scale Manufacturing</div><div class="day-date">April 27, 2026</div></div>
+      </div>
+      <div class="day-images two">
+        <div class="photo"><img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&q=80" alt="Electronics" onerror="this.style.display='none'"><div class="photo-fallback">Electronics & Hardware</div></div>
+        <div class="photo"><img src="https://images.unsplash.com/photo-1593941707882-a5bba14938c7?w=800&q=80" alt="EV" onerror="this.style.display='none'"><div class="photo-fallback">Electric Vehicles</div></div>
+      </div>
+      <div class="two-col">
+        <div class="col-left">
+          <div class="col-label">Schedule</div>
+          <div class="sched-item"><span class="sched-time">09:30–11:00</span><span class="sched-act">Sparrows Hardware Development 101 @ Qianhai Talent Hub</span></div>
+          <div class="sched-item"><span class="sched-time">11:15–12:30</span><span class="sched-act">Shenzhen hardware ecosystem overview + briefing</span></div>
+          <div class="sched-item"><span class="sched-time">12:30–13:30</span><span class="sched-act">Lunch</span></div>
+          <div class="sched-item"><span class="sched-time">13:45–15:00</span><span class="sched-act">Guided walk through Huaqiangbei electronics market</span></div>
+          <div class="sched-item"><span class="sched-time">15:15–16:00</span><span class="sched-act">Visit HAX / Troublemaker Makerspace</span></div>
+          <div class="sched-item"><span class="sched-time">16:30–17:30</span><span class="sched-act">Visit BYD</span></div>
+          <div class="sched-item"><span class="sched-time">17:30–18:15</span><span class="sched-act">Visit DJI (TBC) or Dreame Technology (TBC)</span></div>
+          <div class="sched-item"><span class="sched-time">19:00–21:00</span><span class="sched-act">Dinner: 烤鱼 (Chinese grilled fish)</span></div>
+        </div>
+        <div class="col-right">
+          <div class="col-label">Companies &amp; Places</div>
+          <div class="company"><a href="https://en.wikipedia.org/wiki/Huaqiangbei" target="_blank">Huaqiangbei Electronics Market<span class="arrow">↗</span></a><p>World's largest electronics marketplace — the epicenter of hardware prototyping. Components, dev boards, sensors across multi-story buildings.</p></div>
+          <div class="company"><a href="https://hax.co" target="_blank">HAX<span class="arrow">↗</span></a><p>World's most active hardware and robotics accelerator. Sources, funds, and scales startups from Shenzhen to global markets.</p></div>
+          <div class="company"><a href="https://troublemaker.city" target="_blank">Troublemaker<span class="arrow">↗</span></a><p>Shenzhen-based makerspace and community hub for hardware builders and creators.</p></div>
+          <div class="company"><a href="https://www.byd.com" target="_blank">BYD<span class="arrow">↗</span></a><p>Global leader in EVs and battery tech. See the Seal, Han, Dolphin EVs, electric buses, and Blade Battery platform.</p></div>
+          <div class="company"><a href="https://www.dji.com" target="_blank">DJI<span class="arrow">↗</span></a><p>World's largest drone manufacturer. Flagship store at DJI Sky City — Mavic, Mini, Inspire lines plus enterprise drones.</p></div>
+          <div class="company"><a href="https://www.dreametech.com" target="_blank">Dreame Technology<span class="arrow">↗</span></a><p>Smart home robotics — L20 Ultra robot vacuum, H14 Pro wet-dry vacuum, and robotic lawn mowers.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DAY 2 -->
+    <div class="day">
+      <div class="day-header">
+        <span class="day-num">2</span>
+        <div><div class="day-title">Day 2: Medium-Scale Manufacturing + Consumer Hardware</div><div class="day-date">April 28, 2026</div></div>
+      </div>
+      <div class="day-images two">
+        <div class="photo"><img src="https://images.unsplash.com/photo-1565043589221-1a6fd9ae45c7?w=800&q=80" alt="Factory" onerror="this.style.display='none'"><div class="photo-fallback">Factory Floor</div></div>
+        <div class="photo"><img src="https://images.unsplash.com/photo-1533282960533-51328aa49826?w=800&q=80" alt="City" onerror="this.style.display='none'"><div class="photo-fallback">Shenzhen City</div></div>
+      </div>
+      <div class="two-col">
+        <div class="col-left">
+          <div class="col-label">Schedule</div>
+          <div class="sched-item"><span class="sched-time">09:30–11:00</span><span class="sched-act">Visit The Sparrows office</span></div>
+          <div class="sched-item"><span class="sched-time">11:15–12:15</span><span class="sched-act">PCB / FPC / wire harness supplier visit</span></div>
+          <div class="sched-item"><span class="sched-time">12:15–13:15</span><span class="sched-act">Lunch</span></div>
+          <div class="sched-item"><span class="sched-time">13:30–14:30</span><span class="sched-act">4-in-1 charging accessories factory</span></div>
+          <div class="sched-item"><span class="sched-time">14:45–15:45</span><span class="sched-act">Portable power bank factory</span></div>
+          <div class="sched-item"><span class="sched-time">16:00–17:00</span><span class="sched-act">Visit Water World</span></div>
+          <div class="sched-item"><span class="sched-time">17:30–18:30</span><span class="sched-act">Visit ZPilot Store</span></div>
+          <div class="sched-item"><span class="sched-time">19:00–20:45</span><span class="sched-act">Dinner in Nantou Ancient Town</span></div>
+        </div>
+        <div class="col-right">
+          <div class="col-label">Companies &amp; Places</div>
+          <div class="company"><span class="name-plain">The Sparrows</span><p>Hardware development consultancy. Tour their office to see how product teams navigate Shenzhen's supply chain from design to production.</p></div>
+          <div class="company"><span class="name-plain">PCB / FPC Supplier</span><p>Visit a printed circuit board and flexible printed circuit manufacturer. See the production line for components used in consumer electronics worldwide.</p></div>
+          <div class="company"><span class="name-plain">Charging Accessories Factory</span><p>Tour a 4-in-1 charging accessories production line — see injection molding, assembly, and QC processes up close.</p></div>
+          <div class="company"><span class="name-plain">Power Bank Factory</span><p>See how portable power banks are manufactured at scale — from battery cell assembly to final packaging.</p></div>
+          <div class="company"><a href="https://waterworldsz.com" target="_blank">Water World<span class="arrow">↗</span></a><p>Consumer electronics showroom and experience center in Shenzhen.</p></div>
+          <div class="company"><span class="name-plain">ZPilot Store</span><p>Retail store for emerging tech products and gadgets in the Shenzhen ecosystem.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DAY 3 -->
+    <div class="day">
+      <div class="day-header">
+        <span class="day-num">3</span>
+        <div><div class="day-title">Day 3: Robotics + AI + Makerspaces</div><div class="day-date">April 29, 2026</div></div>
+      </div>
+      <div class="day-images two">
+        <div class="photo"><img src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800&q=80" alt="Robotics" onerror="this.style.display='none'"><div class="photo-fallback">Robotics</div></div>
+        <div class="photo"><img src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=800&q=80" alt="Makerspace" onerror="this.style.display='none'"><div class="photo-fallback">Makerspace</div></div>
+      </div>
+      <div class="two-col">
+        <div class="col-left">
+          <div class="col-label">Schedule</div>
+          <div class="sched-item"><span class="sched-time">09:30–10:30</span><span class="sched-act">Visit Chaihuo x.factory makerspace</span></div>
+          <div class="sched-item"><span class="sched-time">10:45–12:00</span><span class="sched-act">Robotics startup visits</span></div>
+          <div class="sched-item"><span class="sched-time">12:00–13:00</span><span class="sched-act">Lunch</span></div>
+          <div class="sched-item"><span class="sched-time">13:00–15:00</span><span class="sched-act">Additional robotics company visits</span></div>
+          <div class="sched-item"><span class="sched-time">15:15–16:15</span><span class="sched-act">Visit Mundane + discussion with Theo Nash</span></div>
+          <div class="sched-item"><span class="sched-time">16:30–18:00</span><span class="sched-act">Explore OCT Loft Creative Culture Park</span></div>
+          <div class="sched-item"><span class="sched-time">18:15–20:00</span><span class="sched-act">Dinner at Magpie — Northeast Chinese Fusion</span></div>
+        </div>
+        <div class="col-right">
+          <div class="col-label">Companies &amp; Places</div>
+          <div class="company"><a href="https://www.chaihuo.org" target="_blank">Chaihuo x.factory<span class="arrow">↗</span></a><p>Shenzhen's premier makerspace. Tour prototyping labs, CNC machines, 3D printers — see how startups go from idea to prototype in days.</p></div>
+          <div class="company"><a href="https://www.realman-robotics.com" target="_blank">Realman Robotics<span class="arrow">↗</span></a><p>Lightweight collaborative robot arms for industrial and research applications.</p></div>
+          <div class="company"><a href="https://www.paxini.com" target="_blank">Paxini Robotics<span class="arrow">↗</span></a><p>Intelligent automation solutions for manufacturing and logistics.</p></div>
+          <div class="company"><a href="https://www.d-robotics.cc" target="_blank">D-Robotics<span class="arrow">↗</span></a><p>AI chip and robotics platform company building edge computing solutions for intelligent robots.</p></div>
+          <div class="company"><span class="name-plain">Zerith Robotics</span><p>Emerging robotics startup focused on next-generation robotic systems.</p></div>
+          <div class="company"><a href="https://www.elephantrobotics.com" target="_blank">Elephant Robotics<span class="arrow">↗</span></a><p>Known for myCobot (desktop cobot) and Mercury (humanoid upper-body robot). Hands-on demos for education and research.</p></div>
+          <div class="company"><span class="name-plain">Mundane</span><p>Design studio and creative practice. Discussion with founder Theo Nash on design, hardware, and building in Shenzhen.</p></div>
+          <div class="company"><a href="https://en.wikipedia.org/wiki/OCT_Loft" target="_blank">OCT Loft<span class="arrow">↗</span></a><p>Creative culture park — galleries, studios, shops, and cafes in a converted industrial complex.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DAY 4 -->
+    <div class="day">
+      <div class="day-header">
+        <span class="day-num">4</span>
+        <div><div class="day-title">Day 4: Advanced Robotics + Dongguan</div><div class="day-date">April 30, 2026</div></div>
+      </div>
+      <div class="day-images one">
+        <div class="photo"><img src="https://images.unsplash.com/photo-1507582020474-9a35b7d455d9?w=800&q=80" alt="Drone" onerror="this.style.display='none'"><div class="photo-fallback">Drone Technology</div></div>
+      </div>
+      <div class="two-col">
+        <div class="col-left">
+          <div class="col-label">Schedule</div>
+          <div class="sched-item"><span class="sched-time">Morning</span><span class="sched-act">Visit Zero Zero Robotics</span></div>
+          <div class="sched-item"><span class="sched-time">Midday</span><span class="sched-act">Travel to Dongguan</span></div>
+          <div class="sched-item"><span class="sched-time">Afternoon</span><span class="sched-act">Dongguan Robotics Innovation Center</span></div>
+          <div class="sched-item"><span class="sched-time">Afternoon</span><span class="sched-act">Visit United Robotics</span></div>
+        </div>
+        <div class="col-right">
+          <div class="col-label">Companies &amp; Places</div>
+          <div class="company"><a href="https://store.hoverair.com" target="_blank">Zero Zero Robotics<span class="arrow">↗</span></a><p>Creator of HOVERAir X1 autonomous flying camera. See the Hover Camera product line and their computer-vision flight control system.</p></div>
+          <div class="company"><span class="name-plain">Dongguan Robotics Innovation Center</span><p>Robotics innovation hub in the Pearl River Delta — next wave of Chinese robotics R&D and manufacturing.</p></div>
+          <div class="company"><span class="name-plain">United Robotics</span><p>Robotics company in the Dongguan area, part of the expanding PRD robotics ecosystem.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap"><div class="divider"></div></div>
+
+  <!-- MAP -->
+  <div class="wrap section">
+    <h2 style="font-size:22px;font-weight:600;margin-bottom:8px">Locations Map</h2>
+    <p style="font-size:14px;color:#6b7280;line-height:1.6;max-width:560px;margin-bottom:24px">
+      Geographic spread of visits across Shenzhen (Nanshan, Futian, Pingshan) and Dongguan.
+      Most company HQs cluster within 15 km of each other in western Shenzhen.
+    </p>
+    <div id="map"></div>
+    <div class="pin-legend" id="pin-legend"></div>
+  </div>
+
+  <div class="wrap"><div class="divider"></div></div>
+
+  <!-- LOGISTICS -->
+  <div class="wrap section">
+    <h2 style="font-size:22px;font-weight:600;margin-bottom:24px">Logistics &amp; Deposit</h2>
+    <div class="logistics-grid">
+      <div class="logistics-card"><h4>Participant Cap</h4><p>Limited to 20 participants to ensure meaningful access at each company visit and small-group engagement with founders and engineers.</p></div>
+      <div class="logistics-card"><h4>Deposit Required</h4><p>$200 USD per participant. Held to secure your spot and applied toward local transportation and meals during the trek.</p></div>
+      <div class="logistics-card"><h4>Included</h4><p>All local ground transportation, all group meals (lunch &amp; dinner), company visit arrangements, and a local guide/translator.</p></div>
+      <div class="logistics-card"><h4>Not Included</h4><p>International flights, hotel accommodation, travel insurance, visa fees, and personal expenses.</p></div>
+    </div>
+
+    <div class="breakdown">
+      <h4>$200 Deposit Breakdown</h4>
+      <p>Your $200 deposit directly funds the operational costs of the trek:</p>
+      <div class="bk-line"><div><div class="bk-label">Local Transportation</div><div class="bk-desc">Airport transfers, metro/bus passes, chartered transit between visits and to Dongguan</div></div><div class="bk-cost">$80</div></div>
+      <div class="bk-line"><div><div class="bk-label">Meals (Lunch + Dinner × 4 days)</div><div class="bk-desc">8 group meals including grilled fish, Nantou Ancient Town, Magpie Northeast Fusion</div></div><div class="bk-cost">$90</div></div>
+      <div class="bk-line"><div><div class="bk-label">Guide &amp; Logistics</div><div class="bk-desc">Professional local guide, translator, site coordination, contingency fund</div></div><div class="bk-cost">$20</div></div>
+      <div class="bk-line"><div><div class="bk-label">Company Visits &amp; Factory Tours</div><div class="bk-desc">All visits and tours arranged at no additional cost</div></div><div class="bk-cost">included</div></div>
+    </div>
+
+    <p style="font-size:13px;color:#94a3b8;max-width:560px">
+      Interested in joining? Reach out to the organizing team for availability and next steps. Spots are allocated on a first-come, first-served basis.
+    </p>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>Shenzhen Robotics &amp; Manufacturing Trek · April 27–30, 2026</p>
+    <p class="small">Questions? Contact the organizing team for details and availability.</p>
+  </footer>
+
+  <!-- LEAFLET MAP SCRIPT -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script>
+    var locations = [
+      { name: "DJI Sky City", category: "Drone Tech", color: "#e74c3c", district: "Nanshan", desc: "DJI global HQ & flagship store", lat: 22.5574, lng: 113.9435 },
+      { name: "BYD Headquarters", category: "EV & Auto", color: "#27ae60", district: "Pingshan", desc: "World's largest EV manufacturer", lat: 22.6870, lng: 114.3460 },
+      { name: "Zero Zero Robotics", category: "Drone Tech", color: "#e74c3c", district: "Nanshan", desc: "HOVERAir X1 self-flying camera", lat: 22.5405, lng: 113.9520 },
+      { name: "Elephant Robotics", category: "Robotics", color: "#8e44ad", district: "Nanshan", desc: "myCobot collaborative robot arm", lat: 22.5380, lng: 113.9440 },
+      { name: "Dreame Technology", category: "Smart Home", color: "#3498db", district: "Nanshan", desc: "Robot vacuums & smart devices", lat: 22.5450, lng: 113.9500 },
+      { name: "Huaqiangbei Market", category: "Electronics", color: "#f39c12", district: "Futian", desc: "World's largest electronics market", lat: 22.5468, lng: 114.0846 },
+      { name: "Chaihuo x.factory", category: "Maker Space", color: "#1abc9c", district: "Nanshan", desc: "Premier makerspace & prototyping", lat: 22.5270, lng: 113.9370 },
+      { name: "HAX / Troublemaker", category: "Accelerator", color: "#e67e22", district: "Various", desc: "Hardware accelerator & makerspace", lat: 22.5420, lng: 114.0710 },
+      { name: "Mundane", category: "Design", color: "#2c3e50", district: "Nanshan", desc: "Design studio by Theo Nash", lat: 22.5340, lng: 113.9380 },
+      { name: "OCT Loft", category: "Landmark", color: "#16a085", district: "Nanshan", desc: "Creative culture park", lat: 22.5370, lng: 113.9560 },
+      { name: "Dongguan Robotics Center", category: "Robotics", color: "#8e44ad", district: "Dongguan", desc: "Robotics innovation hub", lat: 23.0200, lng: 113.7500 }
+    ];
+
+    var map = L.map('map', { center: [22.56, 114.0], zoom: 11, zoomControl: true, scrollWheelZoom: false });
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+      attribution: '&copy; OSM &copy; CARTO', subdomains: 'abcd', maxZoom: 19
+    }).addTo(map);
+
+    locations.forEach(function(loc) {
+      var m = L.circleMarker([loc.lat, loc.lng], {
+        radius: 8, fillColor: loc.color, color: '#fff', weight: 2, opacity: 1, fillOpacity: 0.9
+      }).addTo(map);
+      m.bindPopup(
+        '<div style="padding:8px;font-family:system-ui;min-width:160px">' +
+        '<div style="font-size:10px;font-weight:600;text-transform:uppercase;color:' + loc.color + ';margin-bottom:2px">' + loc.category + '</div>' +
+        '<div style="font-size:14px;font-weight:700;color:#111;margin-bottom:4px">' + loc.name + '</div>' +
+        '<div style="font-size:11px;color:#888;margin-bottom:4px">' + loc.district + '</div>' +
+        '<div style="font-size:12px;color:#555;line-height:1.4">' + loc.desc + '</div></div>'
+      );
+      m.bindTooltip(loc.name, { permanent: true, direction: 'right', offset: [8, 0], className: 'll' });
+    });
+
+    var bounds = L.latLngBounds(locations.map(function(l) { return [l.lat, l.lng]; }));
+    map.fitBounds(bounds, { padding: [40, 40] });
+
+    // Build legend
+    var legend = document.getElementById('pin-legend');
+    locations.forEach(function(loc) {
+      legend.innerHTML += '<div class="pin-item"><span class="pin-dot" style="background:' + loc.color + '"></span><span class="pin-name">' + loc.name + '</span><span class="pin-dist">' + loc.district + '</span></div>';
+    });
+  </script>
+</body>
+</html>

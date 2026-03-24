@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shenzhen Trek - Tech Innovation Tour</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+    #map { width: 100%; height: 100vh; }
+
+    .custom-popup .leaflet-popup-content-wrapper {
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+      padding: 0;
+    }
+    .custom-popup .leaflet-popup-content {
+      margin: 0;
+      min-width: 220px;
+    }
+    .custom-popup .leaflet-popup-tip {
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+
+    .popup-content {
+      padding: 16px;
+    }
+    .popup-content .category {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+    .popup-content h3 {
+      font-size: 15px;
+      font-weight: 700;
+      color: #1a1a2e;
+      margin-bottom: 6px;
+      line-height: 1.3;
+    }
+    .popup-content .district {
+      font-size: 12px;
+      color: #666;
+      margin-bottom: 8px;
+    }
+    .popup-content .description {
+      font-size: 13px;
+      color: #444;
+      line-height: 1.5;
+    }
+
+    .marker-label {
+      background: rgba(255, 255, 255, 0.92) !important;
+      border: none !important;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1) !important;
+      border-radius: 6px !important;
+      padding: 3px 8px !important;
+      font-size: 12px !important;
+      font-weight: 600 !important;
+      color: #1a1a2e !important;
+      white-space: nowrap !important;
+    }
+    .marker-label::before {
+      border-right-color: rgba(255, 255, 255, 0.92) !important;
+    }
+
+    .legend {
+      background: white;
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+      font-size: 13px;
+      line-height: 1.8;
+      max-width: 220px;
+    }
+    .legend h4 {
+      font-size: 14px;
+      font-weight: 700;
+      color: #1a1a2e;
+      margin-bottom: 8px;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .legend-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script>
+    const locations = [
+      {
+        name: "DJI Sky City",
+        category: "Drone Tech",
+        color: "#e74c3c",
+        district: "Nanshan District",
+        description: "DJI global headquarters & flagship store. Twin-tower campus showcasing the world's leading drone technology.",
+        lat: 22.5574,
+        lng: 113.9435
+      },
+      {
+        name: "BYD Headquarters",
+        category: "EV & Auto",
+        color: "#27ae60",
+        district: "Pingshan District",
+        description: "BYD's sprawling HQ campus with EV showroom. Home to the world's largest EV manufacturer.",
+        lat: 22.6870,
+        lng: 114.3460
+      },
+      {
+        name: "Zero Zero Robotics",
+        category: "Drone Tech",
+        color: "#e74c3c",
+        district: "Nanshan District",
+        description: "Makers of the HOVERAir X1 self-flying camera drone. Pioneering autonomous aerial photography.",
+        lat: 22.5405,
+        lng: 113.9520
+      },
+      {
+        name: "Elephant Robotics",
+        category: "Robotics",
+        color: "#8e44ad",
+        district: "Nanshan District",
+        description: "Creators of myCobot, the compact collaborative robot arm. Open-source robotics for education and industry.",
+        lat: 22.5380,
+        lng: 113.9440
+      },
+      {
+        name: "Dreame Technology",
+        category: "Smart Home",
+        color: "#3498db",
+        district: "Nanshan District",
+        description: "R&D campus for cutting-edge robot vacuums and smart home devices, including the L20 Ultra.",
+        lat: 22.5450,
+        lng: 113.9500
+      },
+      {
+        name: "Huaqiangbei Market",
+        category: "Electronics",
+        color: "#f39c12",
+        district: "Futian District",
+        description: "The world's largest electronics market. Miles of stalls selling components, gadgets, and custom hardware.",
+        lat: 22.5468,
+        lng: 114.0846
+      },
+      {
+        name: "Chaihuo x.factory",
+        category: "Maker Space",
+        color: "#1abc9c",
+        district: "Nanshan District",
+        description: "Shenzhen's premier makerspace. Community workshop with CNC, 3D printing, and prototyping tools.",
+        lat: 22.5270,
+        lng: 113.9370
+      },
+      {
+        name: "HAX Accelerator",
+        category: "Accelerator",
+        color: "#e67e22",
+        district: "Futian District",
+        description: "World's first and largest hardware accelerator. Backed by SOSV, turning hardware ideas into products.",
+        lat: 22.5420,
+        lng: 114.0710
+      },
+      {
+        name: "Shenzhen Software Park",
+        category: "Tech Hub",
+        color: "#2c3e50",
+        district: "Nanshan District",
+        description: "Major tech campus housing hundreds of software companies. Heart of Shenzhen's digital economy.",
+        lat: 22.5400,
+        lng: 113.9510
+      },
+      {
+        name: "Shenzhen Talent Park",
+        category: "Landmark",
+        color: "#16a085",
+        district: "Nanshan District",
+        description: "Scenic waterfront park celebrating Shenzhen's innovators. Perfect sunset spot overlooking Shenzhen Bay.",
+        lat: 22.5195,
+        lng: 113.9430
+      }
+    ];
+
+    // Initialize map centered on Shenzhen
+    const map = L.map('map', {
+      center: [22.56, 114.0],
+      zoom: 12,
+      zoomControl: false
+    });
+
+    // Add zoom control to top-right
+    L.control.zoom({ position: 'topright' }).addTo(map);
+
+    // CartoDB Voyager tile layer (clean, modern look)
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/">CARTO</a>',
+      subdomains: 'abcd',
+      maxZoom: 19
+    }).addTo(map);
+
+    // Create colored circle markers for each location
+    function createMarker(loc) {
+      const marker = L.circleMarker([loc.lat, loc.lng], {
+        radius: 10,
+        fillColor: loc.color,
+        color: '#fff',
+        weight: 2.5,
+        opacity: 1,
+        fillOpacity: 0.9
+      }).addTo(map);
+
+      const popupHtml = `
+        <div class="popup-content">
+          <div class="category" style="color: ${loc.color}">${loc.category}</div>
+          <h3>${loc.name}</h3>
+          <div class="district">${loc.district}</div>
+          <div class="description">${loc.description}</div>
+        </div>
+      `;
+
+      marker.bindPopup(popupHtml, { className: 'custom-popup', closeButton: true });
+
+      // Add permanent label
+      marker.bindTooltip(loc.name, {
+        permanent: true,
+        direction: 'right',
+        offset: [10, 0],
+        className: 'marker-label'
+      });
+
+      return marker;
+    }
+
+    locations.forEach(createMarker);
+
+    // Add legend
+    const legend = L.control({ position: 'bottomleft' });
+    legend.onAdd = function () {
+      const div = L.DomUtil.create('div', 'legend');
+      const categories = [
+        { color: '#e74c3c', label: 'Drone Tech' },
+        { color: '#27ae60', label: 'EV & Auto' },
+        { color: '#8e44ad', label: 'Robotics' },
+        { color: '#3498db', label: 'Smart Home' },
+        { color: '#f39c12', label: 'Electronics' },
+        { color: '#1abc9c', label: 'Maker Space' },
+        { color: '#e67e22', label: 'Accelerator' },
+        { color: '#2c3e50', label: 'Tech Hub' },
+        { color: '#16a085', label: 'Landmark' }
+      ];
+
+      div.innerHTML = '<h4>Shenzhen Trek</h4>' +
+        categories.map(c =>
+          `<div class="legend-item">
+            <span class="legend-dot" style="background:${c.color}"></span>
+            <span>${c.label}</span>
+          </div>`
+        ).join('');
+
+      return div;
+    };
+    legend.addTo(map);
+
+    // Fit map to show all markers with padding
+    const bounds = L.latLngBounds(locations.map(l => [l.lat, l.lng]));
+    map.fitBounds(bounds, { padding: [50, 50] });
+  </script>
+</body>
+</html>
