@@ -7,17 +7,18 @@
   <meta name="description" content="4-day immersion into Shenzhen's robotics and manufacturing ecosystem. Visit DJI, BYD, Elephant Robotics, and more.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --navy: #0c1b2e;
-      --navy-light: #132d4a;
-      --charcoal: #1e293b;
-      --accent: #c8a255;
-      --accent-light: #e8d5a0;
+      --navy: #0a0f1a;
+      --navy-mid: #111827;
+      --navy-light: #1e293b;
+      --accent: #d4a853;
+      --accent-glow: #f0d078;
+      --accent-soft: rgba(212,168,83,0.12);
       --text: #1e293b;
       --text-secondary: #64748b;
       --text-muted: #94a3b8;
@@ -25,6 +26,9 @@
       --border-light: #f1f5f9;
       --surface: #f8fafc;
       --white: #ffffff;
+      --purple: #7c3aed;
+      --blue: #3b82f6;
+      --emerald: #10b981;
     }
 
     body {
@@ -34,124 +38,329 @@
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
     }
 
     a { color: var(--navy-light); text-decoration: none; font-weight: 500; transition: color 0.2s; }
     a:hover { color: var(--accent); }
     img { display: block; max-width: 100%; }
 
-    .wrap { max-width: 1000px; margin: 0 auto; padding: 0 32px; }
-    .section { padding: 72px 0; }
+    .wrap { max-width: 1080px; margin: 0 auto; padding: 0 32px; }
+    .wrap-wide { max-width: 1200px; margin: 0 auto; padding: 0 32px; }
+    .section { padding: 80px 0; }
     .divider { border: none; border-top: 1px solid var(--border); }
+
+    /* ─── Animations ─── */
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(2deg); }
+    }
+    @keyframes float-slow {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-12px) rotate(-1.5deg); }
+    }
+    @keyframes pulse-glow {
+      0%, 100% { opacity: 0.4; }
+      50% { opacity: 0.8; }
+    }
+    @keyframes fade-up {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .fade-in { animation: fade-up 0.8s ease-out both; }
+    .fade-in-d1 { animation-delay: 0.1s; }
+    .fade-in-d2 { animation-delay: 0.2s; }
+    .fade-in-d3 { animation-delay: 0.3s; }
+    .fade-in-d4 { animation-delay: 0.4s; }
 
     /* ─── Hero ─── */
     .hero {
-      background: linear-gradient(165deg, var(--navy) 0%, var(--navy-light) 100%);
+      background: var(--navy);
       color: var(--white);
-      padding: 80px 0 0;
+      padding: 0;
       position: relative;
       overflow: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
-    .hero::before {
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+    .hero-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.35;
+    }
+    .hero-bg::after {
       content: '';
       position: absolute;
-      top: -50%;
-      right: -20%;
-      width: 600px;
-      height: 600px;
-      background: radial-gradient(circle, rgba(200,162,85,0.08) 0%, transparent 70%);
-      pointer-events: none;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(10,15,26,0.3) 0%, rgba(10,15,26,0.6) 50%, rgba(10,15,26,0.95) 100%);
     }
-    .hero-inner { text-align: center; position: relative; z-index: 1; }
+    .hero-orb {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+      filter: blur(80px);
+    }
+    .hero-orb-1 {
+      width: 500px; height: 500px;
+      background: rgba(212,168,83,0.15);
+      top: -10%; right: -5%;
+      animation: float 8s ease-in-out infinite;
+    }
+    .hero-orb-2 {
+      width: 350px; height: 350px;
+      background: rgba(124,58,237,0.1);
+      bottom: 10%; left: -8%;
+      animation: float-slow 10s ease-in-out infinite;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 120px 32px 80px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
     .hero-eyebrow {
+      display: inline-block;
       font-size: 11px;
       font-weight: 700;
-      letter-spacing: 0.2em;
+      letter-spacing: 0.25em;
       text-transform: uppercase;
       color: var(--accent);
-      margin-bottom: 16px;
+      margin-bottom: 24px;
+      padding: 8px 20px;
+      border: 1px solid rgba(212,168,83,0.3);
+      border-radius: 100px;
+      background: rgba(212,168,83,0.08);
     }
     .hero h1 {
-      font-size: 44px;
-      font-weight: 800;
-      letter-spacing: -0.03em;
-      line-height: 1.1;
-      margin-bottom: 16px;
+      font-family: 'Space Grotesk', 'Inter', sans-serif;
+      font-size: 64px;
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      line-height: 1.05;
+      margin-bottom: 24px;
     }
+    .hero h1 .accent { color: var(--accent); }
     .hero .dates {
-      font-size: 20px;
+      font-size: 22px;
       font-weight: 600;
-      color: var(--accent-light);
+      color: rgba(255,255,255,0.85);
       margin-bottom: 8px;
     }
     .hero .sub {
-      font-size: 16px;
-      color: rgba(255,255,255,0.6);
-      margin-bottom: 8px;
+      font-size: 17px;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 12px;
+      line-height: 1.7;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
     }
     .hero .tags {
       font-size: 13px;
-      color: rgba(255,255,255,0.35);
-      letter-spacing: 0.02em;
+      color: rgba(255,255,255,0.3);
+      letter-spacing: 0.04em;
       margin-bottom: 48px;
     }
-    .hero-img {
-      padding: 0 32px;
-      position: relative;
-      z-index: 1;
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 32px;
+      background: var(--accent);
+      color: var(--navy);
+      font-weight: 700;
+      font-size: 14px;
+      border-radius: 100px;
+      letter-spacing: 0.02em;
+      transition: all 0.3s;
+      box-shadow: 0 0 40px rgba(212,168,83,0.3);
     }
-    .hero-img img {
-      width: 100%;
-      height: 280px;
-      object-fit: cover;
-      border-radius: 12px 12px 0 0;
-      box-shadow: 0 -8px 40px rgba(0,0,0,0.3);
+    .hero-cta:hover {
+      background: var(--accent-glow);
+      color: var(--navy);
+      transform: translateY(-2px);
+      box-shadow: 0 0 60px rgba(212,168,83,0.4);
+    }
+    .hero-scroll {
+      position: absolute;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1;
+      color: rgba(255,255,255,0.3);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+    .hero-scroll::after {
+      content: '';
+      width: 1px;
+      height: 32px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.3), transparent);
+      animation: pulse-glow 2s ease-in-out infinite;
     }
 
-    /* ─── At-a-Glance Facts ─── */
+    /* ─── Facts Bar ─── */
     .facts-bar {
-      background: var(--surface);
-      border-bottom: 1px solid var(--border);
-      padding: 0;
+      background: var(--navy-mid);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
     }
     .facts {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      max-width: 1000px;
+      max-width: 1080px;
       margin: 0 auto;
     }
     .facts > div {
-      padding: 24px 32px;
-      border-right: 1px solid var(--border);
+      padding: 28px 32px;
+      border-right: 1px solid rgba(255,255,255,0.06);
+      text-align: center;
     }
     .facts > div:last-child { border-right: none; }
     .facts .label {
       font-size: 10px;
-      letter-spacing: 0.14em;
-      color: var(--text-muted);
+      letter-spacing: 0.16em;
+      color: rgba(255,255,255,0.35);
       text-transform: uppercase;
       font-weight: 700;
       margin-bottom: 6px;
     }
     .facts .value {
-      font-size: 15px;
+      font-size: 16px;
       font-weight: 700;
-      color: var(--navy);
+      color: var(--white);
+    }
+
+    /* ─── Product Showcase ─── */
+    .showcase {
+      background: var(--navy);
+      padding: 100px 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .showcase::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle, rgba(212,168,83,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .showcase .section-header h2 { color: var(--white); }
+    .showcase .section-header p { color: rgba(255,255,255,0.5); }
+    .showcase .accent-line { background: var(--accent); }
+    .showcase-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 56px;
+    }
+    .showcase-card {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.06);
+      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      group: card;
+    }
+    .showcase-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(212,168,83,0.3);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 0 40px rgba(212,168,83,0.08);
+    }
+    .showcase-card-img {
+      width: 100%;
+      height: 240px;
+      overflow: hidden;
+      position: relative;
+    }
+    .showcase-card-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .showcase-card:hover .showcase-card-img img {
+      transform: scale(1.05);
+    }
+    .showcase-card-img::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 60%;
+      background: linear-gradient(transparent, rgba(10,15,26,0.8));
+      pointer-events: none;
+    }
+    .showcase-card-body {
+      padding: 24px;
+    }
+    .showcase-card-tag {
+      display: inline-block;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+    .showcase-card-body h3 {
+      font-family: 'Space Grotesk', 'Inter', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 8px;
+      letter-spacing: -0.01em;
+    }
+    .showcase-card-body p {
+      font-size: 13px;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.6;
+    }
+    .showcase-credit {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      font-size: 9px;
+      color: rgba(255,255,255,0.4);
+      background: rgba(0,0,0,0.4);
+      backdrop-filter: blur(8px);
+      padding: 3px 8px;
+      border-radius: 4px;
+      z-index: 1;
     }
 
     /* ─── Section Headers ─── */
-    .section-header {
-      margin-bottom: 48px;
-    }
+    .section-header { margin-bottom: 48px; }
     .section-header h2 {
-      font-size: 28px;
-      font-weight: 800;
+      font-family: 'Space Grotesk', 'Inter', sans-serif;
+      font-size: 36px;
+      font-weight: 700;
       color: var(--navy);
-      letter-spacing: -0.02em;
-      margin-bottom: 8px;
+      letter-spacing: -0.03em;
+      margin-bottom: 12px;
     }
     .section-header p {
-      font-size: 15px;
+      font-size: 16px;
       color: var(--text-secondary);
       line-height: 1.7;
       max-width: 580px;
@@ -165,7 +374,7 @@
     }
 
     /* ─── Day Block ─── */
-    .day { margin-bottom: 64px; }
+    .day { margin-bottom: 72px; }
     .day:last-child { margin-bottom: 0; }
     .day-header {
       display: flex;
@@ -179,40 +388,66 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 36px;
-      height: 36px;
-      border-radius: 8px;
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
       font-weight: 800;
       color: var(--white);
       background: var(--navy);
-      font-size: 14px;
+      font-size: 15px;
       flex-shrink: 0;
     }
-    .day-title { font-size: 18px; font-weight: 700; color: var(--navy); }
+    .day-title {
+      font-family: 'Space Grotesk', 'Inter', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--navy);
+    }
     .day-date { font-size: 13px; color: var(--text-muted); margin-top: 2px; font-weight: 500; }
 
     /* ─── Day Images ─── */
     .day-images { display: grid; gap: 16px; margin-bottom: 28px; }
     .day-images.two { grid-template-columns: 1fr 1fr; }
+    .day-images.three { grid-template-columns: 1fr 1fr 1fr; }
     .day-images.one { grid-template-columns: 1fr; }
     .photo {
       width: 100%;
-      height: 180px;
-      border-radius: 10px;
+      height: 220px;
+      border-radius: 12px;
       overflow: hidden;
-      background: linear-gradient(135deg, var(--navy), var(--charcoal));
+      background: linear-gradient(135deg, var(--navy), var(--navy-light));
       position: relative;
     }
-    .photo img { width: 100%; height: 100%; object-fit: cover; }
+    .photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .photo:hover img { transform: scale(1.04); }
     .photo-credit {
       position: absolute;
       bottom: 8px;
       right: 10px;
       font-size: 9px;
       color: rgba(255,255,255,0.5);
-      background: rgba(0,0,0,0.3);
+      background: rgba(0,0,0,0.4);
+      backdrop-filter: blur(4px);
       padding: 2px 6px;
       border-radius: 3px;
+    }
+    .photo-label {
+      position: absolute;
+      bottom: 12px;
+      left: 12px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--white);
+      background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(8px);
+      padding: 4px 10px;
+      border-radius: 6px;
+      letter-spacing: 0.02em;
     }
 
     /* ─── Two-Column Layout ─── */
@@ -249,16 +484,16 @@
 
     /* ─── Company Cards ─── */
     .company {
-      margin-bottom: 16px;
-      padding: 12px 16px;
-      border-radius: 8px;
+      margin-bottom: 12px;
+      padding: 14px 16px;
+      border-radius: 10px;
       border: 1px solid transparent;
-      transition: all 0.2s;
+      transition: all 0.25s;
     }
     .company:hover { background: var(--surface); border-color: var(--border); }
     .company:last-child { margin-bottom: 0; }
     .company a, .company .name-plain { font-size: 14px; font-weight: 700; }
-    .company .name-plain { color: var(--charcoal); }
+    .company .name-plain { color: var(--navy); }
     .company .arrow { font-size: 11px; margin-left: 4px; opacity: 0.4; }
     .company p {
       font-size: 12px;
@@ -270,8 +505,8 @@
     /* ─── Map ─── */
     #map {
       width: 100%;
-      height: 480px;
-      border-radius: 12px;
+      height: 500px;
+      border-radius: 16px;
       box-shadow: 0 4px 24px rgba(0,0,0,0.08);
       border: 1px solid var(--border);
     }
@@ -282,7 +517,7 @@
       margin-top: 24px;
       padding: 20px 24px;
       background: var(--surface);
-      border-radius: 10px;
+      border-radius: 12px;
       border: 1px solid var(--border);
     }
     .pin-item {
@@ -300,16 +535,19 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 20px;
-      max-width: 720px;
+      max-width: 780px;
     }
     .logistics-card {
-      border-radius: 10px;
-      padding: 24px;
+      border-radius: 14px;
+      padding: 28px;
       background: var(--surface);
       border: 1px solid var(--border);
-      transition: box-shadow 0.2s;
+      transition: all 0.3s;
     }
-    .logistics-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.06); }
+    .logistics-card:hover {
+      box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+      transform: translateY(-2px);
+    }
     .logistics-card h4 {
       font-size: 13px;
       font-weight: 700;
@@ -322,31 +560,46 @@
 
     .trip-cost {
       margin-top: 32px;
-      padding: 28px 32px;
+      padding: 32px 40px;
       background: var(--navy);
-      border-radius: 10px;
+      border-radius: 14px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      max-width: 720px;
+      max-width: 780px;
+      position: relative;
+      overflow: hidden;
+    }
+    .trip-cost::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -10%;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(212,168,83,0.15) 0%, transparent 70%);
+      pointer-events: none;
     }
     .trip-cost .cost-label {
-      font-size: 14px;
+      font-size: 15px;
       color: rgba(255,255,255,0.7);
       font-weight: 500;
+      position: relative;
     }
     .trip-cost .cost-label strong {
       display: block;
       font-size: 13px;
-      color: rgba(255,255,255,0.45);
+      color: rgba(255,255,255,0.4);
       font-weight: 400;
       margin-top: 4px;
     }
     .trip-cost .cost-amount {
-      font-size: 32px;
-      font-weight: 800;
+      font-family: 'Space Grotesk', 'Inter', sans-serif;
+      font-size: 40px;
+      font-weight: 700;
       color: var(--accent);
-      letter-spacing: -0.02em;
+      letter-spacing: -0.03em;
+      position: relative;
     }
 
     /* ─── Footer ─── */
@@ -354,13 +607,19 @@
       border-top: 1px solid var(--border);
       background: var(--navy);
       color: rgba(255,255,255,0.5);
-      padding: 40px 32px;
+      padding: 48px 32px;
       text-align: center;
     }
     footer p { font-size: 13px; }
-    footer .footer-title { color: rgba(255,255,255,0.8); font-weight: 600; margin-bottom: 6px; }
-    footer .small { font-size: 11px; color: rgba(255,255,255,0.3); margin-top: 12px; }
-    footer a { color: var(--accent-light); }
+    footer .footer-title {
+      font-family: 'Space Grotesk', 'Inter', sans-serif;
+      color: rgba(255,255,255,0.85);
+      font-weight: 700;
+      font-size: 16px;
+      margin-bottom: 6px;
+    }
+    footer .small { font-size: 11px; color: rgba(255,255,255,0.25); margin-top: 12px; }
+    footer a { color: var(--accent); }
 
     /* ─── Leaflet Overrides ─── */
     .ll {
@@ -378,19 +637,22 @@
 
     /* ─── Responsive ─── */
     @media (max-width: 768px) {
-      .hero h1 { font-size: 30px; }
-      .hero-img img { height: 200px; }
+      .hero h1 { font-size: 36px; }
+      .hero-content { padding: 100px 20px 60px; }
       .facts { grid-template-columns: repeat(2, 1fr); }
-      .facts > div { border-right: none; border-bottom: 1px solid var(--border); }
+      .facts > div { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06); }
       .two-col { grid-template-columns: 1fr; }
       .col-left { padding-right: 0; border-right: none; padding-bottom: 28px; border-bottom: 1px solid var(--border); margin-bottom: 28px; }
       .col-right { padding-left: 0; }
-      .day-images.two { grid-template-columns: 1fr; }
+      .day-images.two, .day-images.three { grid-template-columns: 1fr; }
+      .showcase-grid { grid-template-columns: 1fr; }
       .logistics-grid { grid-template-columns: 1fr; }
       .pin-legend { grid-template-columns: 1fr 1fr; }
-      .trip-cost { flex-direction: column; gap: 12px; text-align: center; }
-      .section { padding: 48px 0; }
-      .wrap { padding: 0 20px; }
+      .trip-cost { flex-direction: column; gap: 16px; text-align: center; }
+      .section { padding: 56px 0; }
+      .wrap, .wrap-wide { padding: 0 20px; }
+      .section-header h2 { font-size: 28px; }
+      .showcase { padding: 60px 0; }
     }
   </style>
 </head>
@@ -398,31 +660,113 @@
 
   <!-- ════════ HERO ════════ -->
   <header class="hero">
-    <div class="wrap hero-inner">
-      <div class="hero-eyebrow">Executive Innovation Program</div>
-      <h1>Shenzhen Robotics &amp;<br>Manufacturing Trek</h1>
-      <p class="dates">April 27 – 30, 2026</p>
-      <p class="sub">4 Days in Shenzhen &amp; Dongguan, China</p>
-      <p class="tags">DJI &middot; BYD &middot; Dreame &middot; Elephant Robotics &middot; Zero Zero Robotics &middot; HAX &middot; Chaihuo &middot; Huaqiangbei</p>
-    </div>
-    <div class="wrap hero-img">
-      <!-- Hero image: Shenzhen skyline aerial, CC BY-SA 4.0, MNXANL -->
+    <div class="hero-bg">
       <img src="https://upload.wikimedia.org/wikipedia/commons/2/27/201610_North_District_and_Shenzhen.jpg" alt="Aerial view of Shenzhen skyline">
     </div>
+    <div class="hero-orb hero-orb-1"></div>
+    <div class="hero-orb hero-orb-2"></div>
+    <div class="hero-content">
+      <div class="hero-eyebrow fade-in">Schwarzman Scholars</div>
+      <h1 class="fade-in fade-in-d1">Shenzhen Robotics &<br><span class="accent">Manufacturing Trek</span></h1>
+      <p class="dates fade-in fade-in-d2">April 27 – 30, 2026</p>
+      <p class="sub fade-in fade-in-d2">Four days inside the factories, labs, and streets where the future of hardware is being built. Drones, EVs, cobots, and the world's densest electronics supply chain.</p>
+      <p class="tags fade-in fade-in-d3">DJI &middot; BYD &middot; Dreame &middot; Elephant Robotics &middot; Zero Zero Robotics &middot; HAX &middot; Chaihuo &middot; Huaqiangbei</p>
+      <a href="#overview" class="hero-cta fade-in fade-in-d4">Explore the Itinerary &darr;</a>
+    </div>
+    <div class="hero-scroll">Scroll</div>
   </header>
 
   <!-- ════════ FACTS BAR ════════ -->
   <div class="facts-bar">
     <div class="facts">
       <div><p class="label">Dates</p><p class="value">April 27 – 30</p></div>
-      <div><p class="label">Participants</p><p class="value">Capped at 20</p></div>
-      <div><p class="label">Trip Cost</p><p class="value">$200 USD</p></div>
+      <div><p class="label">Participants</p><p class="value">Capped at 30</p></div>
+      <div><p class="label">Trip Cost</p><p class="value">$150 USD</p></div>
       <div><p class="label">Duration</p><p class="value">4 Days</p></div>
     </div>
   </div>
 
+  <!-- ════════ PRODUCT SHOWCASE ════════ -->
+  <section class="showcase">
+    <div class="wrap-wide">
+      <div class="section-header" style="text-align:center; max-width:680px; margin:0 auto 0;">
+        <div class="accent-line" style="margin:0 auto 20px;"></div>
+        <h2>The Machines Shaping Tomorrow</h2>
+        <p style="margin:0 auto;">From autonomous drones to humanoid robots and the world's best-selling electric vehicles — meet the products built in the city you're about to explore.</p>
+      </div>
+      <div class="showcase-grid">
+        <div class="showcase-card">
+          <div class="showcase-card-img">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/e/ed/2024-10-_DJI_Mavic_3_Pro_-_01.jpg" alt="DJI Mavic 3 Pro drone">
+            <span class="showcase-credit">A.BourgeoisP, CC BY 4.0</span>
+          </div>
+          <div class="showcase-card-body">
+            <span class="showcase-card-tag">Drone Technology</span>
+            <h3>DJI Mavic 3 Pro</h3>
+            <p>The world's first tri-camera drone system. Built in Shenzhen, flown worldwide. You'll visit DJI Sky City where it all began.</p>
+          </div>
+        </div>
+        <div class="showcase-card">
+          <div class="showcase-card-img">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/d/d6/2023_BYD_Seal_Design.jpg" alt="BYD Seal electric vehicle">
+            <span class="showcase-credit">Calreyn88, CC BY 4.0</span>
+          </div>
+          <div class="showcase-card-body">
+            <span class="showcase-card-tag">Electric Vehicles</span>
+            <h3>BYD Seal</h3>
+            <p>The EV that outsells Tesla in China. Blade Battery, ocean-inspired design, and vertically integrated manufacturing — all under one roof in Pingshan.</p>
+          </div>
+        </div>
+        <div class="showcase-card">
+          <div class="showcase-card-img">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/e/e3/Dobot-_A_Robot_arm.png" alt="Collaborative robot arm">
+            <span class="showcase-credit">DangerAlpha, CC0</span>
+          </div>
+          <div class="showcase-card-body">
+            <span class="showcase-card-tag">Collaborative Robotics</span>
+            <h3>Elephant Robotics myCobot</h3>
+            <p>Desktop-sized cobot with 6 degrees of freedom. Hands-on demos let you program robot arms that cost less than a laptop.</p>
+          </div>
+        </div>
+        <div class="showcase-card">
+          <div class="showcase-card-img">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/d/d4/Robot_Vacuum_2016_%2831606445890%29.jpg" alt="Robot vacuum cleaner">
+            <span class="showcase-credit">Ryan McBride, CC BY 2.0</span>
+          </div>
+          <div class="showcase-card-body">
+            <span class="showcase-card-tag">Smart Home Robotics</span>
+            <h3>Dreame L20 Ultra</h3>
+            <p>AI-powered robot vacuum with LiDAR navigation and auto mop-washing. See the factory where smart home robots come to life.</p>
+          </div>
+        </div>
+        <div class="showcase-card">
+          <div class="showcase-card-img">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/0/09/A_drone_DJI_Mavic_2_Pro_flying.jpg" alt="Autonomous flying camera drone">
+            <span class="showcase-credit">Iswoar, CC BY-SA 4.0</span>
+          </div>
+          <div class="showcase-card-body">
+            <span class="showcase-card-tag">Autonomous Flight</span>
+            <h3>HOVERAir X1</h3>
+            <p>A palm-sized self-flying camera. No controller needed — computer vision handles everything. Visit the Zero Zero Robotics lab where it was born.</p>
+          </div>
+        </div>
+        <div class="showcase-card">
+          <div class="showcase-card-img">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/5/5f/Entrance_of_Huaqiangbei%2C_2017.jpg" alt="Huaqiangbei electronics market entrance">
+            <span class="showcase-credit">CC BY-SA 3.0</span>
+          </div>
+          <div class="showcase-card-body">
+            <span class="showcase-card-tag">Electronics Ecosystem</span>
+            <h3>Huaqiangbei Market</h3>
+            <p>30+ buildings. Millions of components. The beating heart of global hardware. Walk the floors where makers source everything from resistors to full robots.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ════════ OVERVIEW ════════ -->
-  <div class="wrap section">
+  <div class="wrap section" id="overview">
     <div class="section-header">
       <div class="accent-line"></div>
       <h2>Trip Overview</h2>
@@ -453,16 +797,21 @@
           <div class="day-date">Monday, April 27, 2026</div>
         </div>
       </div>
-      <div class="day-images two">
+      <div class="day-images three">
         <div class="photo">
-          <!-- Huaqiangbei entrance, CC BY-SA 3.0 -->
           <img src="https://upload.wikimedia.org/wikipedia/commons/5/5f/Entrance_of_Huaqiangbei%2C_2017.jpg" alt="Entrance to Huaqiangbei electronics market">
+          <span class="photo-label">Huaqiangbei</span>
           <span class="photo-credit">CC BY-SA 3.0</span>
         </div>
         <div class="photo">
-          <!-- BYD Seal EV, CC BY 4.0, Calreyn88 -->
           <img src="https://upload.wikimedia.org/wikipedia/commons/d/d6/2023_BYD_Seal_Design.jpg" alt="BYD Seal electric vehicle">
+          <span class="photo-label">BYD Seal EV</span>
           <span class="photo-credit">Calreyn88, CC BY 4.0</span>
+        </div>
+        <div class="photo">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/e/ed/2024-10-_DJI_Mavic_3_Pro_-_01.jpg" alt="DJI Mavic 3 Pro">
+          <span class="photo-label">DJI Mavic 3 Pro</span>
+          <span class="photo-credit">A.BourgeoisP, CC BY 4.0</span>
         </div>
       </div>
       <div class="two-col">
@@ -478,7 +827,7 @@
           <div class="sched-item"><span class="sched-time">19:00 – 21:00</span><span class="sched-act">Dinner: Chinese grilled fish</span></div>
         </div>
         <div class="col-right">
-          <div class="col-label">Companies &amp; Places</div>
+          <div class="col-label">Companies & Places</div>
           <div class="company"><a href="https://en.wikipedia.org/wiki/Huaqiangbei" target="_blank">Huaqiangbei Electronics Market <span class="arrow">&nearr;</span></a><p>World's largest electronics marketplace. Components, dev boards, and sensors across multi-story buildings.</p></div>
           <div class="company"><a href="https://hax.co" target="_blank">HAX <span class="arrow">&nearr;</span></a><p>World's most active hardware and robotics accelerator. Sources, funds, and scales startups from Shenzhen to global markets.</p></div>
           <div class="company"><a href="https://troublemaker.city" target="_blank">Troublemaker <span class="arrow">&nearr;</span></a><p>Shenzhen-based makerspace and community hub for hardware builders and creators.</p></div>
@@ -500,13 +849,13 @@
       </div>
       <div class="day-images two">
         <div class="photo">
-          <!-- Robot vacuum, CC BY 2.0, Ryan McBride -->
           <img src="https://upload.wikimedia.org/wikipedia/commons/d/d4/Robot_Vacuum_2016_%2831606445890%29.jpg" alt="Robot vacuum cleaner on factory floor">
+          <span class="photo-label">Smart Home Robotics</span>
           <span class="photo-credit">Ryan McBride, CC BY 2.0</span>
         </div>
         <div class="photo">
-          <!-- DJI Mavic 3 Pro, CC BY 4.0, A.BourgeoisP -->
           <img src="https://upload.wikimedia.org/wikipedia/commons/e/ed/2024-10-_DJI_Mavic_3_Pro_-_01.jpg" alt="DJI Mavic 3 Pro drone">
+          <span class="photo-label">DJI Mavic 3 Pro</span>
           <span class="photo-credit">A.BourgeoisP, CC BY 4.0</span>
         </div>
       </div>
@@ -523,7 +872,7 @@
           <div class="sched-item"><span class="sched-time">19:00 – 20:45</span><span class="sched-act">Dinner in Nantou Ancient Town</span></div>
         </div>
         <div class="col-right">
-          <div class="col-label">Companies &amp; Places</div>
+          <div class="col-label">Companies & Places</div>
           <div class="company"><span class="name-plain">The Sparrows</span><p>Hardware development consultancy. See how product teams navigate Shenzhen's supply chain from design to production.</p></div>
           <div class="company"><span class="name-plain">PCB / FPC Supplier</span><p>Printed circuit board and flexible circuit manufacturer. Components used in consumer electronics worldwide.</p></div>
           <div class="company"><span class="name-plain">Charging Accessories Factory</span><p>4-in-1 charging accessories production line with injection molding, assembly, and QC processes.</p></div>
@@ -543,16 +892,21 @@
           <div class="day-date">Wednesday, April 29, 2026</div>
         </div>
       </div>
-      <div class="day-images two">
+      <div class="day-images three">
         <div class="photo">
-          <!-- Dobot robot arm, CC0, DangerAlpha -->
           <img src="https://upload.wikimedia.org/wikipedia/commons/e/e3/Dobot-_A_Robot_arm.png" alt="Collaborative robot arm">
+          <span class="photo-label">Cobot Arms</span>
           <span class="photo-credit">DangerAlpha, CC0</span>
         </div>
         <div class="photo">
-          <!-- Drone in flight, CC BY-SA 4.0, Iswoar -->
           <img src="https://upload.wikimedia.org/wikipedia/commons/0/09/A_drone_DJI_Mavic_2_Pro_flying.jpg" alt="Drone in flight">
+          <span class="photo-label">Autonomous Flight</span>
           <span class="photo-credit">Iswoar, CC BY-SA 4.0</span>
+        </div>
+        <div class="photo">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/d/d4/Robot_Vacuum_2016_%2831606445890%29.jpg" alt="Robot vacuum">
+          <span class="photo-label">Smart Robotics</span>
+          <span class="photo-credit">Ryan McBride, CC BY 2.0</span>
         </div>
       </div>
       <div class="two-col">
@@ -567,7 +921,7 @@
           <div class="sched-item"><span class="sched-time">18:15 – 20:00</span><span class="sched-act">Dinner at Magpie — Northeast Chinese Fusion</span></div>
         </div>
         <div class="col-right">
-          <div class="col-label">Companies &amp; Places</div>
+          <div class="col-label">Companies & Places</div>
           <div class="company"><a href="https://www.chaihuo.org" target="_blank">Chaihuo x.factory <span class="arrow">&nearr;</span></a><p>Shenzhen's premier makerspace. Tour prototyping labs, CNC machines, and 3D printers.</p></div>
           <div class="company"><a href="https://www.realman-robotics.com" target="_blank">Realman Robotics <span class="arrow">&nearr;</span></a><p>Lightweight collaborative robot arms for industrial and research applications.</p></div>
           <div class="company"><a href="https://www.paxini.com" target="_blank">Paxini Robotics <span class="arrow">&nearr;</span></a><p>Intelligent automation solutions for manufacturing and logistics.</p></div>
@@ -589,10 +943,15 @@
           <div class="day-date">Thursday, April 30, 2026</div>
         </div>
       </div>
-      <div class="day-images one">
+      <div class="day-images two">
         <div class="photo">
-          <!-- Shenzhen skyline, CC BY-SA 4.0, MNXANL -->
+          <img src="https://upload.wikimedia.org/wikipedia/commons/0/09/A_drone_DJI_Mavic_2_Pro_flying.jpg" alt="Drone in flight over landscape">
+          <span class="photo-label">HOVERAir X1</span>
+          <span class="photo-credit">Iswoar, CC BY-SA 4.0</span>
+        </div>
+        <div class="photo">
           <img src="https://upload.wikimedia.org/wikipedia/commons/2/27/201610_North_District_and_Shenzhen.jpg" alt="Shenzhen skyline aerial view">
+          <span class="photo-label">Shenzhen to Dongguan</span>
           <span class="photo-credit">MNXANL, CC BY-SA 4.0</span>
         </div>
       </div>
@@ -605,9 +964,9 @@
           <div class="sched-item"><span class="sched-time">Afternoon</span><span class="sched-act">Visit United Robotics</span></div>
         </div>
         <div class="col-right">
-          <div class="col-label">Companies &amp; Places</div>
+          <div class="col-label">Companies & Places</div>
           <div class="company"><a href="https://store.hoverair.com" target="_blank">Zero Zero Robotics <span class="arrow">&nearr;</span></a><p>Creator of HOVERAir X1 autonomous flying camera. See Hover Camera and their computer-vision flight control system.</p></div>
-          <div class="company"><span class="name-plain">Dongguan Robotics Innovation Center</span><p>Robotics innovation hub in the Pearl River Delta with next-wave Chinese robotics R&amp;D.</p></div>
+          <div class="company"><span class="name-plain">Dongguan Robotics Innovation Center</span><p>Robotics innovation hub in the Pearl River Delta with next-wave Chinese robotics R&D.</p></div>
           <div class="company"><span class="name-plain">United Robotics</span><p>Robotics company in the Dongguan area, part of the expanding PRD robotics ecosystem.</p></div>
         </div>
       </div>
@@ -630,18 +989,6 @@
     <div class="pin-legend" id="pin-legend"></div>
   </div>
 
-  <!--
-    Map pins — all companies and locations in the itinerary:
-    Shenzhen (Nanshan): DJI Sky City, Zero Zero Robotics, Elephant Robotics, Dreame Technology,
-      Chaihuo x.factory, Mundane, OCT Loft, Realman Robotics, Paxini Robotics, D-Robotics,
-      Zerith Robotics, The Sparrows, Nantou Ancient Town
-    Shenzhen (Futian): Huaqiangbei Market, HAX, Troublemaker, ZPilot Store
-    Shenzhen (Pingshan): BYD Headquarters
-    Shenzhen (Various): PCB/FPC Supplier, Charging Accessories Factory, Power Bank Factory, Water World
-    Dongguan: Dongguan Robotics Innovation Center, United Robotics
-    Restaurants: Magpie (OCT Loft area)
-  -->
-
   <div class="wrap"><hr class="divider"></div>
 
   <!-- ════════ LOGISTICS ════════ -->
@@ -653,11 +1000,11 @@
     <div class="logistics-grid">
       <div class="logistics-card">
         <h4>Participant Cap</h4>
-        <p>Limited to 20 participants to ensure meaningful access at each company visit and small-group engagement with founders and engineers.</p>
+        <p>Limited to 30 participants to ensure meaningful access at each company visit and small-group engagement with founders and engineers.</p>
       </div>
       <div class="logistics-card">
         <h4>What's Included</h4>
-        <p>All local ground transportation, group meals (lunch &amp; dinner), company visit arrangements, and a local guide/translator.</p>
+        <p>All local ground transportation, group meals (lunch & dinner), company visit arrangements, and a local guide/translator.</p>
       </div>
       <div class="logistics-card">
         <h4>Not Included</h4>
@@ -674,14 +1021,14 @@
         Trip Cost per Participant
         <strong>Covers local transport, all group meals, guide, and logistics</strong>
       </div>
-      <div class="cost-amount">$200</div>
+      <div class="cost-amount">$150</div>
     </div>
   </div>
 
   <!-- ════════ FOOTER ════════ -->
   <footer>
-    <p class="footer-title">Shenzhen Robotics &amp; Manufacturing Trek</p>
-    <p>April 27 – 30, 2026 &middot; Shenzhen &amp; Dongguan, China</p>
+    <p class="footer-title">Shenzhen Robotics & Manufacturing Trek</p>
+    <p>April 27 – 30, 2026 &middot; Shenzhen & Dongguan, China</p>
     <p class="small">Questions? Contact the organizing team for details and availability.</p>
   </footer>
 
@@ -690,8 +1037,8 @@
   <script>
     var locations = [
       // Nanshan District
-      { name: "DJI Sky City", category: "Drone Tech", color: "#c8a255", district: "Nanshan", desc: "DJI global HQ & flagship store", lat: 22.5574, lng: 113.9435 },
-      { name: "Zero Zero Robotics", category: "Drone Tech", color: "#c8a255", district: "Nanshan", desc: "HOVERAir X1 self-flying camera", lat: 22.5405, lng: 113.9520 },
+      { name: "DJI Sky City", category: "Drone Tech", color: "#d4a853", district: "Nanshan", desc: "DJI global HQ & flagship store", lat: 22.5574, lng: 113.9435 },
+      { name: "Zero Zero Robotics", category: "Drone Tech", color: "#d4a853", district: "Nanshan", desc: "HOVERAir X1 self-flying camera", lat: 22.5405, lng: 113.9520 },
       { name: "Elephant Robotics", category: "Robotics", color: "#7c3aed", district: "Nanshan", desc: "myCobot collaborative robot arm", lat: 22.5380, lng: 113.9440 },
       { name: "Dreame Technology", category: "Smart Home", color: "#3b82f6", district: "Nanshan", desc: "Robot vacuums & smart devices", lat: 22.5450, lng: 113.9500 },
       { name: "Chaihuo x.factory", category: "Maker Space", color: "#10b981", district: "Nanshan", desc: "Premier makerspace & prototyping labs", lat: 22.5270, lng: 113.9370 },
@@ -732,7 +1079,7 @@
       scrollWheelZoom: false
     });
 
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/">CARTO</a>',
       subdomains: 'abcd',
       maxZoom: 19
