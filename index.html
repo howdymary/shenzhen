@@ -45,9 +45,8 @@
     a:hover { color: var(--accent); }
     img { display: block; max-width: 100%; }
 
-    .wrap { max-width: 1080px; margin: 0 auto; padding: 0 32px; }
-    .wrap-wide { max-width: 1200px; margin: 0 auto; padding: 0 32px; }
-    .section { padding: 80px 0; }
+    .wrap { max-width: 1080px; margin: 0 auto; }
+    .wrap-wide { max-width: 1200px; margin: 0 auto; }
     .divider { border: none; border-top: 1px solid var(--border); }
 
     /* ─── Animations ─── */
@@ -143,7 +142,6 @@
     }
     .hero h1 {
       font-family: 'Space Grotesk', 'Inter', sans-serif;
-      font-size: 64px;
       font-weight: 700;
       letter-spacing: -0.04em;
       line-height: 1.05;
@@ -151,13 +149,11 @@
     }
     .hero h1 .accent { color: var(--accent); }
     .hero .dates {
-      font-size: 22px;
       font-weight: 600;
       color: rgba(255,255,255,0.85);
       margin-bottom: 8px;
     }
     .hero .sub {
-      font-size: 17px;
       color: rgba(255,255,255,0.5);
       margin-bottom: 12px;
       line-height: 1.7;
@@ -248,7 +244,6 @@
     /* ─── Product Showcase ─── */
     .showcase {
       background: var(--navy);
-      padding: 100px 0;
       position: relative;
       overflow: hidden;
     }
@@ -325,7 +320,6 @@
     }
     .showcase-card-body h3 {
       font-family: 'Space Grotesk', 'Inter', sans-serif;
-      font-size: 18px;
       font-weight: 700;
       color: var(--white);
       margin-bottom: 8px;
@@ -353,14 +347,12 @@
     .section-header { margin-bottom: 48px; }
     .section-header h2 {
       font-family: 'Space Grotesk', 'Inter', sans-serif;
-      font-size: 36px;
       font-weight: 700;
       color: var(--navy);
       letter-spacing: -0.03em;
       margin-bottom: 12px;
     }
     .section-header p {
-      font-size: 16px;
       color: var(--text-secondary);
       line-height: 1.7;
       max-width: 580px;
@@ -399,7 +391,6 @@
     }
     .day-title {
       font-family: 'Space Grotesk', 'Inter', sans-serif;
-      font-size: 20px;
       font-weight: 700;
       color: var(--navy);
     }
@@ -595,7 +586,6 @@
     }
     .trip-cost .cost-amount {
       font-family: 'Space Grotesk', 'Inter', sans-serif;
-      font-size: 40px;
       font-weight: 700;
       color: var(--accent);
       letter-spacing: -0.03em;
@@ -635,9 +625,43 @@
       font-family: 'Inter', system-ui, sans-serif !important;
     }
 
-    /* ─── Responsive ─── */
+    /* ─── Fluid Typography ─── */
+    .hero h1 { font-size: clamp(32px, 5vw + 1rem, 72px); }
+    .hero .dates { font-size: clamp(16px, 1.5vw + 0.5rem, 24px); }
+    .hero .sub { font-size: clamp(14px, 1vw + 0.5rem, 18px); }
+    .section-header h2 { font-size: clamp(24px, 2.5vw + 0.5rem, 42px); }
+    .section-header p { font-size: clamp(14px, 1vw + 0.4rem, 17px); }
+    .day-title { font-size: clamp(16px, 1.2vw + 0.5rem, 22px); }
+    .trip-cost .cost-amount { font-size: clamp(28px, 3vw + 0.5rem, 48px); }
+    .showcase-card-body h3 { font-size: clamp(15px, 1vw + 0.5rem, 20px); }
+
+    /* ─── Fluid Spacing ─── */
+    .wrap { max-width: 1080px; padding: 0 clamp(16px, 3vw, 40px); }
+    .wrap-wide { max-width: 1200px; padding: 0 clamp(16px, 3vw, 40px); }
+    .section { padding: clamp(48px, 6vw, 100px) 0; }
+    .showcase { padding: clamp(56px, 7vw, 120px) 0; }
+
+    /* ─── Responsive: Extra large (1440px+) ─── */
+    @media (min-width: 1440px) {
+      .wrap { max-width: 1200px; }
+      .wrap-wide { max-width: 1400px; }
+      .showcase-grid { grid-template-columns: repeat(3, 1fr); gap: 32px; }
+      .showcase-card-img { height: 280px; }
+      .photo { height: 260px; }
+      #map { height: 560px; }
+      .logistics-grid { max-width: 900px; }
+      .trip-cost { max-width: 900px; }
+    }
+
+    /* ─── Responsive: Large tablet / small laptop (1024px) ─── */
+    @media (max-width: 1024px) {
+      .showcase-grid { grid-template-columns: repeat(2, 1fr); }
+      .day-images.three { grid-template-columns: 1fr 1fr; }
+      .pin-legend { grid-template-columns: 1fr 1fr; }
+    }
+
+    /* ─── Responsive: Tablet (768px) ─── */
     @media (max-width: 768px) {
-      .hero h1 { font-size: 36px; }
       .hero-content { padding: 100px 20px 60px; }
       .facts { grid-template-columns: repeat(2, 1fr); }
       .facts > div { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06); }
@@ -649,10 +673,30 @@
       .logistics-grid { grid-template-columns: 1fr; }
       .pin-legend { grid-template-columns: 1fr 1fr; }
       .trip-cost { flex-direction: column; gap: 16px; text-align: center; }
-      .section { padding: 56px 0; }
-      .wrap, .wrap-wide { padding: 0 20px; }
-      .section-header h2 { font-size: 28px; }
-      .showcase { padding: 60px 0; }
+      #map { height: 380px; }
+      .photo { height: 200px; }
+      .showcase-card-img { height: 200px; }
+      .hero-orb-1 { width: 300px; height: 300px; }
+      .hero-orb-2 { width: 200px; height: 200px; }
+    }
+
+    /* ─── Responsive: Small phone (480px) ─── */
+    @media (max-width: 480px) {
+      .hero-eyebrow { font-size: 9px; padding: 6px 14px; letter-spacing: 0.18em; }
+      .hero-cta { padding: 12px 24px; font-size: 13px; }
+      .hero-scroll { display: none; }
+      .facts { grid-template-columns: 1fr 1fr; }
+      .facts > div { padding: 16px 12px; }
+      .facts .value { font-size: 14px; }
+      .pin-legend { grid-template-columns: 1fr; }
+      .sched-item { flex-direction: column; gap: 4px; }
+      .sched-time { width: auto; }
+      .day-header { flex-direction: column; align-items: flex-start; gap: 10px; }
+      #map { height: 300px; border-radius: 10px; }
+      .photo { height: 180px; }
+      .showcase-card-img { height: 180px; }
+      .logistics-card { padding: 20px; }
+      .trip-cost { padding: 24px 20px; }
     }
   </style>
 </head>
