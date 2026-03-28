@@ -61,5 +61,32 @@
     "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
     "description": "Entrance of Huaqiangbei pedestrian street, Shenzhen",
     "commons_page": "https://commons.wikimedia.org/wiki/File:Entrance_of_Huaqiangbei,_2017.jpg"
+  },
+  "yoma_space_sauna_suite": {
+    "url": "https://www.gopagodatravel.com/_next/image?q=75&url=https%3A%2F%2Fcdn.chinatravel-guide.com%2Fimages%2F272001c0de1ac92433c10a56805cb59a158546862a2a394c5bdfb160d9af239e.webp&w=3840",
+    "source": "Gopagoda Travel",
+    "credit": "Gopagoda Travel / China Travel Guide",
+    "license": "All rights reserved",
+    "license_url": "https://www.gopagodatravel.com/experiences/yoma-space-guangzhou",
+    "description": "Sauna suite at YOMA Space luxury spa in Guangzhou",
+    "source_page": "https://www.gopagodatravel.com/experiences/yoma-space-guangzhou"
+  },
+  "yoma_space_arrival_hall": {
+    "url": "https://cdn.chinatravel-guide.com/images/7eb6dcb5122efb8f87f3193ea89b34c9f6ea0a59aeb3d033562127c52e08115f.webp",
+    "source": "Gopagoda Travel",
+    "credit": "Gopagoda Travel / China Travel Guide",
+    "license": "All rights reserved",
+    "license_url": "https://www.gopagodatravel.com/experiences/yoma-space-guangzhou",
+    "description": "Arrival hall and reception lounge at YOMA Space luxury spa in Guangzhou",
+    "source_page": "https://www.gopagodatravel.com/experiences/yoma-space-guangzhou"
+  },
+  "yoma_space_hot_spring_pool": {
+    "url": "https://cdn.chinatravel-guide.com/images/fe361f516a04def9634ff81eeaf4bc59f673ee956210c370c1cb621b7f9e90df.webp",
+    "source": "Gopagoda Travel",
+    "credit": "Gopagoda Travel / China Travel Guide",
+    "license": "All rights reserved",
+    "license_url": "https://www.gopagodatravel.com/experiences/yoma-space-guangzhou",
+    "description": "Indoor hot spring pool at YOMA Space luxury spa in Guangzhou",
+    "source_page": "https://www.gopagodatravel.com/experiences/yoma-space-guangzhou"
   }
 }

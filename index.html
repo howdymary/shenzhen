@@ -779,6 +779,54 @@
     .city-gallery-grid .photo {
       height: 230px;
     }
+    .special-interest {
+      margin-top: 28px;
+      padding: 28px;
+      border-radius: 28px;
+      border: 1px solid rgba(212,168,83,0.24);
+      background:
+        linear-gradient(135deg, rgba(212,168,83,0.12) 0%, rgba(255,255,255,0.95) 45%, rgba(10,15,26,0.02) 100%);
+      box-shadow: 0 24px 60px rgba(10,15,26,0.08);
+    }
+    .special-interest-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+    .special-interest-head h3 {
+      font-family: 'Space Grotesk', 'Inter', sans-serif;
+      font-size: 26px;
+      letter-spacing: -0.03em;
+      color: var(--navy);
+      margin-top: 6px;
+    }
+    .special-interest-copy {
+      max-width: 760px;
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.75;
+      margin-bottom: 20px;
+    }
+    .special-interest-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 10px 16px;
+      border-radius: 999px;
+      border: 1px solid rgba(212,168,83,0.28);
+      background: rgba(255,255,255,0.8);
+      color: var(--accent);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .special-interest-grid .photo {
+      height: 240px;
+    }
 
     /* ─── Footer ─── */
     footer {
@@ -840,6 +888,7 @@
       #hotel-map { height: 520px; }
       .city-gallery-hero .photo { height: 380px; }
       .city-gallery-grid .photo { height: 260px; }
+      .special-interest-grid .photo { height: 240px; }
       .logistics-grid { max-width: 900px; }
       .trip-cost { max-width: 900px; }
     }
@@ -870,6 +919,9 @@
       #hotel-map { height: 360px; }
       .city-gallery-hero .photo { height: 280px; }
       .city-gallery-grid .photo { height: 220px; }
+      .special-interest { padding: 22px; }
+      .special-interest-head h3 { font-size: 22px; }
+      .special-interest-grid .photo { height: 220px; }
       .photo { height: 200px; }
       .showcase-card-img { height: 200px; }
       .hero-orb-1 { width: 300px; height: 300px; }
@@ -892,6 +944,7 @@
       #hotel-map { height: 300px; border-radius: 10px; }
       .city-gallery-hero .photo,
       .city-gallery-grid .photo { height: 200px; }
+      .special-interest-grid .photo { height: 200px; }
       .photo { height: 180px; }
       .showcase-card-img { height: 180px; }
       .logistics-card { padding: 20px; }
@@ -1397,6 +1450,39 @@
           <img src="https://commons.wikimedia.org/wiki/Special:Redirect/file/%E5%8D%97%E5%A4%B4%E5%8F%A4%E5%9F%8E%E5%8D%97%E9%97%A8.jpg" alt="South gate area of Nantou Ancient City">
           <span class="photo-label">Nantou Ancient City</span>
           <span class="photo-credit">Wikimedia Commons</span>
+        </div>
+      </div>
+
+      <div class="special-interest">
+        <div class="special-interest-head">
+          <div>
+            <div class="col-label">Special Point of Interest</div>
+            <h3>YOMA Space, Guangzhou</h3>
+          </div>
+          <span class="special-interest-badge">Luxury Spa Detour</span>
+        </div>
+        <p class="special-interest-copy">
+          Not in Shenzhen proper, but a memorable add-on for anyone continuing onward to Guangzhou:
+          <a href="https://www.gopagodatravel.com/experiences/yoma-space-guangzhou" target="_blank" rel="noopener noreferrer">YOMA Space</a>
+          is a large-format wellness and leisure complex with hot springs, sauna rooms, lounges, and a more cinematic hospitality aesthetic than most city spas.
+        </p>
+
+        <div class="day-images three special-interest-grid">
+          <div class="photo city-photo">
+            <img src="https://www.gopagodatravel.com/_next/image?q=75&amp;url=https%3A%2F%2Fcdn.chinatravel-guide.com%2Fimages%2F272001c0de1ac92433c10a56805cb59a158546862a2a394c5bdfb160d9af239e.webp&amp;w=3840" alt="Sauna suite at YOMA Space luxury spa">
+            <span class="photo-label">Sauna Suite</span>
+            <span class="photo-credit">Gopagoda Travel / China Travel Guide</span>
+          </div>
+          <div class="photo city-photo">
+            <img src="https://cdn.chinatravel-guide.com/images/7eb6dcb5122efb8f87f3193ea89b34c9f6ea0a59aeb3d033562127c52e08115f.webp" alt="Reception lounge and central hall at YOMA Space">
+            <span class="photo-label">Arrival Hall</span>
+            <span class="photo-credit">Gopagoda Travel / China Travel Guide</span>
+          </div>
+          <div class="photo city-photo">
+            <img src="https://cdn.chinatravel-guide.com/images/fe361f516a04def9634ff81eeaf4bc59f673ee956210c370c1cb621b7f9e90df.webp" alt="Indoor hot spring pool at YOMA Space spa">
+            <span class="photo-label">Hot Spring Pool</span>
+            <span class="photo-credit">Gopagoda Travel / China Travel Guide</span>
+          </div>
         </div>
       </div>
     </div>
