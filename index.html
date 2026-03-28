@@ -479,6 +479,33 @@
       padding-top: 1px;
     }
     .sched-act { font-size: 13px; color: var(--text); line-height: 1.55; }
+    .sched-note-group {
+      margin-top: 18px;
+      padding: 16px 18px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--surface);
+    }
+    .sched-note-group + .sched-note-group { margin-top: 12px; }
+    .sched-subhead {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--navy);
+      margin-bottom: 10px;
+    }
+    .sched-list {
+      margin: 0;
+      padding-left: 18px;
+      display: grid;
+      gap: 8px;
+    }
+    .sched-list li {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
 
     /* ─── Company Cards ─── */
     .company {
@@ -879,6 +906,20 @@
           <div class="sched-item"><span class="sched-time">16:30 – 17:30</span><span class="sched-act">Visit BYD</span></div>
           <div class="sched-item"><span class="sched-time">17:30 – 18:15</span><span class="sched-act">Visit DJI (TBC) or Dreame Technology (TBC)</span></div>
           <div class="sched-item"><span class="sched-time">19:00 – 21:00</span><span class="sched-act">Dinner: Chinese grilled fish</span></div>
+          <div class="sched-note-group">
+            <div class="sched-subhead">Notes</div>
+            <ul class="sched-list">
+              <li>Attendees arrive by 12pm on April 27</li>
+              <li>After individual hotel check-in, call an autonomous driving taxi to Shenzhen Bay Park, where you can have coffee delivered via drone</li>
+            </ul>
+          </div>
+          <div class="sched-note-group">
+            <div class="sched-subhead">Tentative</div>
+            <ul class="sched-list">
+              <li>Tour of Qianhai International Talent Hub</li>
+              <li>Move ChaiHuo and SeeedStudio to Day 1</li>
+            </ul>
+          </div>
         </div>
         <div class="col-right">
           <div class="col-label">Companies & Places</div>
@@ -924,6 +965,14 @@
           <div class="sched-item"><span class="sched-time">16:00 – 17:00</span><span class="sched-act">Visit Water World</span></div>
           <div class="sched-item"><span class="sched-time">17:30 – 18:30</span><span class="sched-act">Visit ZPilot Store</span></div>
           <div class="sched-item"><span class="sched-time">19:00 – 20:45</span><span class="sched-act">Dinner in Nantou Ancient Town</span></div>
+          <div class="sched-note-group">
+            <div class="sched-subhead">Tentative</div>
+            <ul class="sched-list">
+              <li>Visit e-cigarette factory</li>
+              <li>Visit leather bag factory</li>
+              <li>Visit MikoDesign to view the beginning of product design</li>
+            </ul>
+          </div>
         </div>
         <div class="col-right">
           <div class="col-label">Companies & Places</div>
@@ -1016,6 +1065,12 @@
           <div class="sched-item"><span class="sched-time">Midday</span><span class="sched-act">Travel to Dongguan</span></div>
           <div class="sched-item"><span class="sched-time">Afternoon</span><span class="sched-act">Dongguan Robotics Innovation Center</span></div>
           <div class="sched-item"><span class="sched-time">Afternoon</span><span class="sched-act">Visit United Robotics</span></div>
+          <div class="sched-note-group">
+            <div class="sched-subhead">Tentative</div>
+            <ul class="sched-list">
+              <li>Visit Shenzhen Institute of AI and Robotics for Society</li>
+            </ul>
+          </div>
         </div>
         <div class="col-right">
           <div class="col-label">Companies & Places</div>
