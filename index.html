@@ -747,6 +747,38 @@
       letter-spacing: -0.03em;
       position: relative;
     }
+    .city-gallery {
+      margin-top: 42px;
+    }
+    .city-gallery-head {
+      max-width: 760px;
+      margin-bottom: 20px;
+    }
+    .city-gallery-head p {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.75;
+    }
+    .city-photo::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(10,15,26,0.08) 0%, rgba(10,15,26,0.16) 42%, rgba(10,15,26,0.55) 100%);
+      pointer-events: none;
+    }
+    .city-photo img {
+      filter: saturate(1.06) contrast(1.02);
+    }
+    .city-photo .photo-label,
+    .city-photo .photo-credit {
+      z-index: 1;
+    }
+    .city-gallery-hero .photo {
+      height: 340px;
+    }
+    .city-gallery-grid .photo {
+      height: 230px;
+    }
 
     /* ─── Footer ─── */
     footer {
@@ -806,6 +838,8 @@
       .photo { height: 260px; }
       #map { height: 560px; }
       #hotel-map { height: 520px; }
+      .city-gallery-hero .photo { height: 380px; }
+      .city-gallery-grid .photo { height: 260px; }
       .logistics-grid { max-width: 900px; }
       .trip-cost { max-width: 900px; }
     }
@@ -834,6 +868,8 @@
       .trip-cost { flex-direction: column; gap: 16px; text-align: center; }
       #map { height: 380px; }
       #hotel-map { height: 360px; }
+      .city-gallery-hero .photo { height: 280px; }
+      .city-gallery-grid .photo { height: 220px; }
       .photo { height: 200px; }
       .showcase-card-img { height: 200px; }
       .hero-orb-1 { width: 300px; height: 300px; }
@@ -854,6 +890,8 @@
       .day-header { flex-direction: column; align-items: flex-start; gap: 10px; }
       #map { height: 300px; border-radius: 10px; }
       #hotel-map { height: 300px; border-radius: 10px; }
+      .city-gallery-hero .photo,
+      .city-gallery-grid .photo { height: 200px; }
       .photo { height: 180px; }
       .showcase-card-img { height: 180px; }
       .logistics-card { padding: 20px; }
@@ -1328,6 +1366,39 @@
         <strong>Covers local transport, all group meals, guide, and logistics</strong>
       </div>
       <div class="cost-amount">$150</div>
+    </div>
+
+    <div class="city-gallery">
+      <div class="city-gallery-head">
+        <div class="col-label">A Glimpse of Shenzhen</div>
+        <p>To help anchor the trip in a real sense of place, here are a few snapshots of the city itself: the skyline, the waterfront, the glow of Qianhai at night, and the older streets around Nantou.</p>
+      </div>
+
+      <div class="day-images one city-gallery-hero">
+        <div class="photo city-photo">
+          <img src="https://commons.wikimedia.org/wiki/Special:Redirect/file/The%20west%20panorama%20of%20Shenzhen2021.jpg" alt="Panoramic skyline view of Shenzhen">
+          <span class="photo-label">Shenzhen Skyline</span>
+          <span class="photo-credit">Charlie fong, CC BY-SA 4.0</span>
+        </div>
+      </div>
+
+      <div class="day-images three city-gallery-grid">
+        <div class="photo city-photo">
+          <img src="https://commons.wikimedia.org/wiki/Special:Redirect/file/20240111%20Aerial%20night%20view%20of%20Qianhai%2C%20Shenzhen.jpg" alt="Aerial night view of Qianhai in Shenzhen">
+          <span class="photo-label">Qianhai at Night</span>
+          <span class="photo-credit">Windmemories, CC BY-SA 4.0</span>
+        </div>
+        <div class="photo city-photo">
+          <img src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Shenzhen%20Bay%20Park%20-%202019-12-09%20-%204.jpg" alt="Shenzhen Bay Park waterfront">
+          <span class="photo-label">Shenzhen Bay Park</span>
+          <span class="photo-credit">Mx. Granger, CC0</span>
+        </div>
+        <div class="photo city-photo">
+          <img src="https://commons.wikimedia.org/wiki/Special:Redirect/file/%E5%8D%97%E5%A4%B4%E5%8F%A4%E5%9F%8E%E5%8D%97%E9%97%A8.jpg" alt="South gate area of Nantou Ancient City">
+          <span class="photo-label">Nantou Ancient City</span>
+          <span class="photo-credit">Wikimedia Commons</span>
+        </div>
+      </div>
     </div>
   </div>
 
