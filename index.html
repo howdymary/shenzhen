@@ -828,6 +828,115 @@
       height: 240px;
     }
 
+    /* ─── Weather Outlook ─── */
+    .weather-outlook {
+      margin-top: 36px;
+      padding: 30px;
+      border-radius: 28px;
+      border: 1px solid rgba(59,130,246,0.16);
+      background:
+        linear-gradient(135deg, rgba(59,130,246,0.08) 0%, rgba(255,255,255,0.96) 40%, rgba(16,185,129,0.05) 100%);
+      box-shadow: 0 24px 60px rgba(10,15,26,0.08);
+    }
+    .weather-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+    .weather-head h3 {
+      font-family: 'Space Grotesk', 'Inter', sans-serif;
+      font-size: 26px;
+      letter-spacing: -0.03em;
+      color: var(--navy);
+      margin-top: 6px;
+    }
+    .weather-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 10px 16px;
+      border-radius: 999px;
+      border: 1px solid rgba(59,130,246,0.18);
+      background: rgba(255,255,255,0.82);
+      color: var(--blue);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .weather-copy {
+      max-width: 780px;
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.75;
+      margin-bottom: 20px;
+    }
+    .weather-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+    .weather-card {
+      border-radius: 18px;
+      padding: 20px;
+      background: rgba(255,255,255,0.88);
+      border: 1px solid var(--border);
+      box-shadow: 0 14px 30px rgba(10,15,26,0.05);
+    }
+    .weather-card .weather-day {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+    .weather-card .weather-date {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 10px;
+    }
+    .weather-card .weather-temp {
+      font-family: 'Space Grotesk', 'Inter', sans-serif;
+      font-size: 30px;
+      line-height: 1;
+      letter-spacing: -0.04em;
+      color: var(--navy);
+      margin-bottom: 8px;
+    }
+    .weather-card .weather-temp span {
+      font-size: 13px;
+      font-family: 'Inter', system-ui, sans-serif;
+      font-weight: 600;
+      color: var(--text-muted);
+      letter-spacing: 0;
+    }
+    .weather-card p {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+    .weather-card p + p {
+      margin-top: 6px;
+    }
+    .weather-note {
+      margin-top: 18px;
+      padding: 16px 18px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.72);
+      border: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+    .weather-note strong {
+      color: var(--navy);
+    }
+
     /* ─── Footer ─── */
     footer {
       border-top: 1px solid var(--border);
@@ -899,6 +1008,7 @@
       .day-images.three { grid-template-columns: 1fr 1fr; }
       .pin-legend { grid-template-columns: 1fr 1fr; }
       .hotel-brief { grid-template-columns: 1fr; }
+      .weather-grid { grid-template-columns: repeat(2, 1fr); }
     }
 
     /* ─── Responsive: Tablet (768px) ─── */
@@ -926,6 +1036,9 @@
       .showcase-card-img { height: 200px; }
       .hero-orb-1 { width: 300px; height: 300px; }
       .hero-orb-2 { width: 200px; height: 200px; }
+      .weather-outlook { padding: 22px; }
+      .weather-head h3 { font-size: 22px; }
+      .weather-grid { grid-template-columns: 1fr; }
     }
 
     /* ─── Responsive: Small phone (480px) ─── */
@@ -1484,6 +1597,54 @@
             <span class="photo-credit">Gopagoda Travel / China Travel Guide</span>
           </div>
         </div>
+      </div>
+
+      <div class="weather-outlook">
+        <div class="weather-head">
+          <div>
+            <div class="col-label">Travel Planning</div>
+            <h3>Shenzhen Forecast, April 27–30</h3>
+          </div>
+          <span class="weather-badge">Checked April 6, 2026</span>
+        </div>
+        <p class="weather-copy">
+          Current long-range forecast points to warm, humid weather through the trek, with the heaviest rain risk building toward Thursday. Breathable clothes and a compact umbrella are a smart default.
+        </p>
+
+        <div class="weather-grid">
+          <div class="weather-card">
+            <div class="weather-day">Monday</div>
+            <div class="weather-date">April 27</div>
+            <div class="weather-temp">28°C / 24°C <span>82°F / 75°F</span></div>
+            <p>Mixed sun and passing showers.</p>
+            <p>Rain chance: 50% · Humidity: 82%</p>
+          </div>
+          <div class="weather-card">
+            <div class="weather-day">Tuesday</div>
+            <div class="weather-date">April 28</div>
+            <div class="weather-temp">27°C / 24°C <span>81°F / 75°F</span></div>
+            <p>Rain likely for much of the day.</p>
+            <p>Rain chance: 70% · Humidity: 83%</p>
+          </div>
+          <div class="weather-card">
+            <div class="weather-day">Wednesday</div>
+            <div class="weather-date">April 29</div>
+            <div class="weather-temp">29°C / 24°C <span>84°F / 75°F</span></div>
+            <p>Warmer, partly cloudy, and still humid.</p>
+            <p>Rain chance: 50% · Humidity: 82%</p>
+          </div>
+          <div class="weather-card">
+            <div class="weather-day">Thursday</div>
+            <div class="weather-date">April 30</div>
+            <div class="weather-temp">26°C / 25°C <span>79°F / 77°F</span></div>
+            <p>Wettest day in the outlook, with rain and thunder risk.</p>
+            <p>Rain chance: 100% · Humidity: 84%</p>
+          </div>
+        </div>
+
+        <p class="weather-note">
+          <strong>Packing note:</strong> bring a light layer for strong indoor A/C, quick-dry shoes, and a small umbrella. Forecast source: WiseMeteo daily pages for April 27, 28, 29, and 30, 2026.
+        </p>
       </div>
     </div>
   </div>
