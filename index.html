@@ -907,31 +907,43 @@
       font-size: 13px;
       color: var(--text-secondary);
       line-height: 1.7;
+      margin-bottom: 16px;
     }
-    .flight-embed-shell {
-      overflow: hidden;
-      border-radius: 18px;
-      border: 1px solid var(--border);
-      background: var(--white);
-      box-shadow: 0 18px 40px rgba(10,15,26,0.08);
-    }
-    .flight-embed-toolbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      flex-wrap: wrap;
-      padding: 14px 16px;
-      background: var(--navy);
-      color: rgba(255,255,255,0.72);
-      font-size: 12px;
-      line-height: 1.5;
-    }
-    .flight-embed-toolbar strong {
-      color: var(--white);
+    .flight-airline {
+      font-size: 13px;
       font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 14px;
     }
-    .flight-open-link {
+    .flight-route {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    .flight-route div {
+      padding: 12px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.78);
+      border: 1px solid var(--border);
+    }
+    .flight-route span {
+      display: block;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+    .flight-route strong {
+      display: block;
+      font-family: 'Space Grotesk', 'Inter', sans-serif;
+      font-size: 18px;
+      color: var(--navy);
+    }
+    .flight-card-link,
+    .flight-search-link {
       display: inline-flex;
       align-items: center;
       gap: 8px;
@@ -945,16 +957,26 @@
       text-transform: uppercase;
       white-space: nowrap;
     }
-    .flight-open-link:hover {
+    .flight-card-link:hover,
+    .flight-search-link:hover {
       background: var(--accent-glow);
       color: var(--navy);
     }
-    .flight-embed {
-      width: 100%;
-      height: 620px;
-      border: 0;
-      display: block;
-      background: var(--surface);
+    .flight-search-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+      padding: 16px 18px;
+      border-radius: 14px;
+      background: var(--navy);
+      color: rgba(255,255,255,0.76);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+    .flight-search-row strong {
+      color: var(--white);
     }
     .flight-note {
       margin-top: 18px;
@@ -1152,7 +1174,6 @@
       .hotel-brief { grid-template-columns: 1fr; }
       .weather-grid { grid-template-columns: repeat(2, 1fr); }
       .flight-options { grid-template-columns: 1fr; }
-      .flight-embed { height: 560px; }
     }
 
     /* ─── Responsive: Tablet (768px) ─── */
@@ -1186,7 +1207,7 @@
       .flight-planning { padding: 22px; }
       .flight-head h3 { font-size: 22px; }
       .flight-option .flight-window { font-size: 24px; }
-      .flight-embed { height: 520px; }
+      .flight-route { grid-template-columns: 1fr; }
     }
 
     /* ─── Responsive: Small phone (480px) ─── */
@@ -1767,29 +1788,38 @@
           <span class="flight-badge">April 27, before 9am</span>
         </div>
         <p class="flight-copy">
-          Most travelers will likely choose one of the early Beijing to Shenzhen departures on Monday, April 27. Use the embedded Trip.com results to compare options leaving before 9:00am, then confirm the final flight number, airport, terminal, and baggage rules before booking.
+          Most travelers will likely choose one of these early Beijing to Shenzhen departures on Monday, April 27. Use the flight numbers below as search anchors on Trip.com, then confirm final timing, airport, terminal, baggage rules, and price before booking.
         </p>
         <div class="flight-options">
           <div class="flight-option">
-            <div class="flight-label">Flight option A</div>
-            <div class="flight-window">Earliest pre-9am fit</div>
-            <p>Best for anyone who wants extra buffer for hotel drop-off, lunch, or getting to the first afternoon activity without rushing.</p>
+            <div class="flight-label">6am option</div>
+            <div class="flight-window">CA1393</div>
+            <div class="flight-airline">Air China · Beijing Capital (PEK) to Shenzhen Bao'an (SZX)</div>
+            <div class="flight-route">
+              <div><span>Depart</span><strong>06:30 PEK</strong></div>
+              <div><span>Arrive</span><strong>10:10 SZX</strong></div>
+            </div>
+            <p>Best if you are staying closer to Beijing Capital or want the earliest Shenzhen arrival buffer.</p>
+            <a class="flight-card-link" href="https://us.trip.com/chinaflights/showfarefirst?dcity=bjs&amp;acity=szx&amp;ddate=2026-04-27&amp;rdate=2026-04-30&amp;triptype=ow&amp;class=y&amp;lowpricesource=searchform&amp;quantity=1&amp;searchboxarg=t&amp;nonstoponly=off&amp;locale=en-US&amp;curr=USD" target="_blank" rel="noopener noreferrer">Search on Trip.com &nearr;</a>
           </div>
           <div class="flight-option">
-            <div class="flight-label">Flight option B</div>
-            <div class="flight-window">Second pre-9am fit</div>
-            <p>Usually the calmer choice if you want a less aggressive airport start while still landing before the main Day 1 programming window.</p>
+            <div class="flight-label">7am option</div>
+            <div class="flight-window">MU6671</div>
+            <div class="flight-airline">China Eastern · Beijing Daxing (PKX) to Shenzhen Bao'an (SZX)</div>
+            <div class="flight-route">
+              <div><span>Depart</span><strong>07:00 PKX</strong></div>
+              <div><span>Arrive</span><strong>10:15 SZX</strong></div>
+            </div>
+            <p>Usually the easier pick if Daxing is more convenient while still leaving room before the Day 1 lunch.</p>
+            <a class="flight-card-link" href="https://us.trip.com/chinaflights/showfarefirst?dcity=bjs&amp;acity=szx&amp;ddate=2026-04-27&amp;rdate=2026-04-30&amp;triptype=ow&amp;class=y&amp;lowpricesource=searchform&amp;quantity=1&amp;searchboxarg=t&amp;nonstoponly=off&amp;locale=en-US&amp;curr=USD" target="_blank" rel="noopener noreferrer">Search on Trip.com &nearr;</a>
           </div>
         </div>
-        <div class="flight-embed-shell">
-          <div class="flight-embed-toolbar">
-            <span><strong>Trip.com search:</strong> Beijing (BJS) to Shenzhen Bao'an (SZX), Monday April 27, one-way economy.</span>
-            <a class="flight-open-link" href="https://us.trip.com/chinaflights/showfarefirst?dcity=bjs&amp;acity=szx&amp;ddate=2026-04-27&amp;rdate=2026-04-30&amp;triptype=ow&amp;class=y&amp;lowpricesource=searchform&amp;quantity=1&amp;searchboxarg=t&amp;nonstoponly=off&amp;locale=en-US&amp;curr=USD" target="_blank" rel="noopener noreferrer">Open Trip.com &nearr;</a>
-          </div>
-          <iframe class="flight-embed" title="Trip.com Beijing to Shenzhen flight search for April 27, 2026" src="https://us.trip.com/chinaflights/showfarefirst?dcity=bjs&amp;acity=szx&amp;ddate=2026-04-27&amp;rdate=2026-04-30&amp;triptype=ow&amp;class=y&amp;lowpricesource=searchform&amp;quantity=1&amp;searchboxarg=t&amp;nonstoponly=off&amp;locale=en-US&amp;curr=USD" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        <div class="flight-search-row">
+          <span><strong>Trip.com search:</strong> Beijing (BJS) to Shenzhen Bao'an (SZX), Monday April 27, one-way economy.</span>
+          <a class="flight-search-link" href="https://us.trip.com/chinaflights/showfarefirst?dcity=bjs&amp;acity=szx&amp;ddate=2026-04-27&amp;rdate=2026-04-30&amp;triptype=ow&amp;class=y&amp;lowpricesource=searchform&amp;quantity=1&amp;searchboxarg=t&amp;nonstoponly=off&amp;locale=en-US&amp;curr=USD" target="_blank" rel="noopener noreferrer">Open Trip.com &nearr;</a>
         </div>
         <p class="flight-note">
-          <strong>Booking note:</strong> third-party booking pages sometimes block embedded views. If the panel does not load, open Trip.com directly and use the departure-time filter for flights before 9:00am.
+          <strong>Booking note:</strong> flight schedules can shift. Search by flight number first, then use Trip.com's departure-time filter for flights before 9:00am.
         </p>
       </div>
 
